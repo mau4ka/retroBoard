@@ -1,0 +1,32 @@
+<header class="header">
+    <h1>RetroBoard</h1>
+    <div class="header-buttons">
+        <button type="submit" class="btn-header" (click)="submit('kek')">
+            Create kek
+          </button>
+          <button type="submit" class="btn-header" (click)="submit('mau')">
+            Create mau
+          </button>
+    </div>
+</header>
+
+
+<div cdkDropListGroup>
+  <div class="example-container" *ngFor="let post of posts">
+    <h2>{{ post.id }}</h2>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="post.posts"
+      class="example-list"
+      (cdkDropListDropped)="drop($event, post.id)"
+      id={{post.id}}
+    >
+      <div class="example-box" *ngFor="let item of post.posts" cdkDrag>
+        {{ item.text }}
+      </div>
+    </div>
+  </div>
+</div>
+
+

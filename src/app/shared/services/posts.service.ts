@@ -33,7 +33,7 @@ export class PostsService {
   }
 
   getAll(): Observable<any> {
-    return this.http.get(`${environment.fbDbUrl}/board.json`).pipe(
+    return this.http.get(`${environment.fbDbUrl}/board`).pipe(
       map((response: any) => {
         if (response) {
           let board = [];
@@ -57,16 +57,16 @@ export class PostsService {
     );
   }
 
-  getById(id: string | undefined): Observable<Post> {
-    return this.http.get<Post>(`${environment.fbDbUrl}/posts/${id}.json`).pipe(
-      map((post: Post) => {
-        return {
-          ...post,
-          id,
-        };
-      })
-    );
-  }
+  // getById(id: string | undefined): Observable<Post> {
+  //   return this.http.get<Post>(`${environment.fbDbUrl}/posts/${id}.json`).pipe(
+  //     map((post: Post) => {
+  //       return {
+  //         ...post,
+  //         id,
+  //       };
+  //     })
+  //   );
+  // }
 
   remove(id: string | undefined): Observable<void> {
     return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`);

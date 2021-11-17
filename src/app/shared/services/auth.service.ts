@@ -19,6 +19,21 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  get token(): string | null {
+    const date = localStorage.getItem('retro-token-exp') ?? new Date();
+    const expDate = new Date(date);
+    if (new Date() > expDate) {
+      this.logout();
+      return null;
+    } else {
+      return localStorage.getItem('retro-token');
+    }
+  }
+
+  isLogin(): Promise<boolean> | boolean {
+    return !!this.token;
+  }
+
   private setToken(res: any) {
     if (res) {
       console.log(res);
@@ -47,5 +62,9 @@ export class AuthService {
     const message = error.error.message;
     this.error$.next(message);
     return throwError(error);
+  }
+
+  logout() {
+    this.setToken(null);
   }
 }

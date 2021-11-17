@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #dc3545;
-  --dark-color: #333333;
+  --warning-color: #333333;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
@@ -20,6 +20,10 @@ body {
   line-height: 1.6;
   background-color: #fff;
   color: #333;
+}
+
+.center {
+  text-align: center;
 }
 
 .container {
@@ -115,5 +119,15 @@ button {
 
 .alert-danger {
   background: var(--danger-color);
+  color: #fff;
+}
+
+.alert-success {
+  background: var(--success-color);
+  color: #fff;
+}
+
+.alert-warning {
+  background: var(--warning-color);
   color: #fff;
 }

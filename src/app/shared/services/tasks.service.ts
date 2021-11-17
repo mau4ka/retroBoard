@@ -10,30 +10,19 @@ import { Task, BoardColumn } from '../interfaces';
 export class TasksService {
   constructor(private http: HttpClient) {}
 
-  create(task: Task, name: string): Observable<Task> {
-    return this.http
-      .post<Task>(`${environment.fbDbUrl}/board/${name}.json`, task)
-      .pipe(
-        map((response: any) => {
-          return {
-            ...task,
-            id: response.name,
-          };
-        })
-      );
+  create(task: Task) {
+    console.log(task);
+
+    return this.http.post(`${environment.fbDbUrl}/board`, task);
   }
 
   updateBoard(idCont: string, container: Task[]) {
-    
-    let newColumn ={
+    let newColumn = {
       id: idCont,
-      newTasks: container
-    }
+      newTasks: container,
+    };
     console.log(newColumn);
-    return this.http.patch(
-      `${environment.fbDbUrl}/board/column`,
-      newColumn
-    );
+    return this.http.patch(`${environment.fbDbUrl}/board/column`, newColumn);
   }
 
   getAll(): Observable<any> {
@@ -60,7 +49,6 @@ export class TasksService {
       })
     );
   }
-
 
   remove(id: string | undefined): Observable<void> {
     return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`);

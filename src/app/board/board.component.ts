@@ -8,6 +8,10 @@ import {
 import { TasksService } from '../shared/services/tasks.service';
 import { Task } from '../shared/interfaces';
 import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
+import { AlertService } from '../shared/services/alert.service';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -16,6 +20,15 @@ import { Subscription } from 'rxjs';
 export class BoardComponent implements OnInit {
   tasks: BoardColumn[] = [];
   pSub!: Subscription;
+
+  form!: FormGroup;
+  newTaskBox = false;
+
+  constructor(
+    private tasksService: TasksService,
+    public auth: AuthService,
+    private alert: AlertService
+  ) {}
 
   drop(event: CdkDragDrop<Task[]>, taskId: string) {
     console.log(event);
@@ -44,24 +57,39 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  submit(column: string) {
-    const task: Task = {
-      author: 'author',
-      text: 'text',
-      likes: 0,
+  submit() {
+    if (this.form.invalid) {
+      return;
+    }
+    console.log(this.form.value);
+    let task: Task = {
+      text: this.form.value.text,
+      id: this.form.value.column,
     };
 
-    this.tasksService.create(task, column).subscribe(() => {
-      alert(task.text);
-    });
-  }
+    this.tasksService.create(task).subscribe();
+    for (let i = 0; i < this.tasks.length; i++) {
+      if (this.tasks[i]._id === this.form.value.column) {
+        this.tasks[i].tasks.push(task);
+      }
+    }
 
-  constructor(private tasksService: TasksService) {}
+    this.alert.success('You add new task!');
+
+    this.form.reset();
+  }
 
   ngOnInit(): void {
     this.pSub = this.tasksService.getAll().subscribe((tasks) => {
       this.tasks = tasks[0].tasks;
       console.log(this.tasks);
+    });
+    this.form = new FormGroup({
+      text: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      column: new FormControl(null, Validators.required),
     });
   }
 }

@@ -9,10 +9,9 @@ export interface BoardColumn {
 }
 
 export interface Task {
-  _id?: string;
-  author: string;
-  text?: string;
-  likes: number;
+  id?: string;
+  text: string;
+  likes?: number;
   comments?: string[];
 }
 

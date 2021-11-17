@@ -11,6 +11,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { AuthInterceptor } from './shared/auth.interseptor';
 import { MainPageComponent } from './main-page/main-page.component';
+import { AlertComponent } from './shared/alert/alert.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -25,6 +26,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     LoginPageComponent,
     RegisterPageComponent,
     MainPageComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

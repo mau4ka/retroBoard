@@ -1,32 +1,70 @@
 <header class="header">
-    <h1>RetroBoard</h1>
-    <div class="header-buttons">
-        <button type="submit" class="btn-header" (click)="submit('kek')">
-            Create kek
-          </button>
-          <button type="submit" class="btn-header" (click)="submit('mau')">
-            Create mau
-          </button>
-    </div>
+  <h1>RetroBoard</h1>
+  <div class="header-buttons">
+    <button (click)="newTaskBox = !newTaskBox" class="plus-button">
+      &#10010; task
+    </button>
+  </div>
 </header>
 
+<app-alert></app-alert>
 
-<div cdkDropListGroup class="board">
-  <div class="example-container" *ngFor="let task of tasks">
-    <h2>{{ task.name }}</h2>
+<div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+  {{ error }}
+</div>
 
+<form
+  *ngIf="newTaskBox"
+  class="add-task-form"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <div>
+    <input
+      class="plus-input"
+      type="text"
+      formControlName="text"
+      placeholder="Enter task"
+    />
     <div
-      cdkDropList
-      [cdkDropListData]="task.tasks"
-      class="example-list"
-      (cdkDropListDropped)="drop($event, task.name)"
-      id={{task._id}}
+      class="validation"
+      *ngIf="form.get('text')!.touched && form.get('text')!.invalid"
     >
-      <div class="example-box" *ngFor="let item of task.tasks" cdkDrag>
-        {{ item.text }}
+      <small *ngIf="form.get('text')!.errors!['required']"> Enter task </small>
+      <small *ngIf="form.get('text')!.errors!['minlength']">
+        Task is too short. It must be at least
+        {{ form.get("text")!.errors!["minlength"]!["requiredLength"] }}, now
+        {{ form.get("text")!.errors!["minlength"]!["actualLength"] }}
+      </small>
+    </div>
+  </div>
+
+  <p>Column</p>
+  <select class="plus-select" value="" formControlName="column">
+    <option *ngFor="let task of tasks" value="{{ task._id }}">
+      {{ task.name }}
+    </option>
+  </select>
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+    Add
+  </button>
+</form>
+<div class="board-container">
+  <div cdkDropListGroup class="board">
+    <div class="example-container" *ngFor="let task of tasks">
+      <h2 class="center">{{ task.name }}</h2>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="task.tasks"
+        class="example-list"
+        (cdkDropListDropped)="drop($event, task.name)"
+        id="{{ task._id }}"
+      >
+        <div class="example-box" *ngFor="let item of task.tasks" cdkDrag>
+          {{ item.text }}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-

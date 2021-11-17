@@ -3,16 +3,15 @@ export interface Board {
 }
 
 export interface BoardColumn {
-  id?: string;
-  posts: Post[];
+  _id?: string;
+  name: string;
+  tasks: Task[];
 }
 
-export interface Post {
-  id?: string;
-  title: string;
+export interface Task {
+  _id?: string;
   author: string;
   text?: string;
-  date?: Date;
   likes: number;
   comments?: string[];
 }

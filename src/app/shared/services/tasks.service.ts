@@ -2,33 +2,37 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Post, BoardColumn } from '../interfaces';
+import { Task, BoardColumn } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PostsService {
+export class TasksService {
   constructor(private http: HttpClient) {}
 
-  create(post: Post, name: string): Observable<Post> {
+  create(task: Task, name: string): Observable<Task> {
     return this.http
-      .post<Post>(`${environment.fbDbUrl}/board/${name}.json`, post)
+      .post<Task>(`${environment.fbDbUrl}/board/${name}.json`, task)
       .pipe(
         map((response: any) => {
           return {
-            ...post,
+            ...task,
             id: response.name,
           };
         })
       );
   }
 
-  updateBoard(nameCont: string, container: any) {
-    console.log(nameCont, container);
-    console.log(`${environment.fbDbUrl}board/${nameCont}.json`);
+  updateBoard(idCont: string, container: Task[]) {
+    
+    let newColumn ={
+      id: idCont,
+      newTasks: container
+    }
+    console.log(newColumn);
     return this.http.patch(
-      `${environment.fbDbUrl}board/${nameCont}/posts.json`,
-      container
+      `${environment.fbDbUrl}/board/column`,
+      newColumn
     );
   }
 
@@ -46,7 +50,7 @@ export class PostsService {
 
             board.push({
               id: column,
-              posts: mau,
+              tasks: mau,
             });
           }
           return board;
@@ -57,16 +61,6 @@ export class PostsService {
     );
   }
 
-  // getById(id: string | undefined): Observable<Post> {
-  //   return this.http.get<Post>(`${environment.fbDbUrl}/posts/${id}.json`).pipe(
-  //     map((post: Post) => {
-  //       return {
-  //         ...post,
-  //         id,
-  //       };
-  //     })
-  //   );
-  // }
 
   remove(id: string | undefined): Observable<void> {
     return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`);

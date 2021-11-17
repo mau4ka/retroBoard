@@ -11,18 +11,18 @@
 </header>
 
 
-<div cdkDropListGroup>
-  <div class="example-container" *ngFor="let post of posts">
-    <h2>{{ post.id }}</h2>
+<div cdkDropListGroup class="board">
+  <div class="example-container" *ngFor="let task of tasks">
+    <h2>{{ task.name }}</h2>
 
     <div
       cdkDropList
-      [cdkDropListData]="post.posts"
+      [cdkDropListData]="task.tasks"
       class="example-list"
-      (cdkDropListDropped)="drop($event, post.id)"
-      id={{post.id}}
+      (cdkDropListDropped)="drop($event, task.name)"
+      id={{task._id}}
     >
-      <div class="example-box" *ngFor="let item of post.posts" cdkDrag>
+      <div class="example-box" *ngFor="let item of task.tasks" cdkDrag>
         {{ item.text }}
       </div>
     </div>

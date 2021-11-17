@@ -1,11 +1,12 @@
+import { BoardColumn } from './../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { PostsService } from '../shared/services/posts.service';
-import { Post } from '../shared/interfaces';
+import { TasksService } from '../shared/services/tasks.service';
+import { Task } from '../shared/interfaces';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-board',
@@ -13,10 +14,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-  posts: any[] = [];
+  tasks: BoardColumn[] = [];
   pSub!: Subscription;
 
-  drop(event: CdkDragDrop<any[]>, postId: string) {
+  drop(event: CdkDragDrop<Task[]>, taskId: string) {
     console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(
@@ -24,7 +25,9 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      console.log(event);
+      this.tasksService
+        .updateBoard(event.container.id, event.container.data)
+        .subscribe();
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -32,34 +35,33 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      this.postsService
+      this.tasksService
         .updateBoard(event.container.id, event.container.data)
         .subscribe();
-      this.postsService
+      this.tasksService
         .updateBoard(event.previousContainer.id, event.previousContainer.data)
         .subscribe();
     }
   }
 
   submit(column: string) {
-    const post: Post = {
-      title: 'аеа',
+    const task: Task = {
       author: 'author',
       text: 'text',
       likes: 0,
     };
 
-    this.postsService.create(post, column).subscribe(() => {
-      alert(post.text);
+    this.tasksService.create(task, column).subscribe(() => {
+      alert(task.text);
     });
   }
 
-  constructor(private postsService: PostsService) {}
+  constructor(private tasksService: TasksService) {}
 
   ngOnInit(): void {
-    this.pSub = this.postsService.getAll().subscribe((posts) => {
-      this.posts = posts;
-      console.log(posts);
+    this.pSub = this.tasksService.getAll().subscribe((tasks) => {
+      this.tasks = tasks[0].tasks;
+      console.log(this.tasks);
     });
   }
 }

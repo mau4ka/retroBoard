@@ -4,7 +4,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { PostsService } from '../shared/posts.service';
+import { PostsService } from '../shared/services/posts.service';
 import { Post } from '../shared/interfaces';
 import { Subscription } from 'rxjs';
 @Component({
@@ -24,7 +24,7 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      console.log(event)
+      console.log(event);
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -32,8 +32,12 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      this.postsService.updateBoard(event.container.id, event.container.data).subscribe()
-      this.postsService.updateBoard(event.previousContainer.id, event.previousContainer.data).subscribe()
+      this.postsService
+        .updateBoard(event.container.id, event.container.data)
+        .subscribe();
+      this.postsService
+        .updateBoard(event.previousContainer.id, event.previousContainer.data)
+        .subscribe();
     }
   }
 

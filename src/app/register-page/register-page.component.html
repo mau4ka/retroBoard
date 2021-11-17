@@ -1,0 +1,63 @@
+<div class="container">
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Register in board space</h2>
+
+    <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+      {{ error }}
+    </div>
+
+    <div
+      class="form-control"
+      [ngClass]="{
+        invalid: form.get('email')!.touched && form.get('email')!.invalid
+      }"
+    >
+      <label for="email">Email:</label>
+      <input id="email" type="email" formControlName="email" />
+      <div
+        *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+        class="validation"
+      >
+        <small *ngIf="form.get('email')!.errors!['required']">
+          Enter email
+        </small>
+        <small *ngIf="form.get('email')!.errors!['email']">
+          Enter valid email
+        </small>
+      </div>
+    </div>
+
+    <div
+      class="form-control"
+      [ngClass]="{
+        invalid: form.get('password')!.touched && form.get('password')!.invalid
+      }"
+    >
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" />
+      <div
+        class="validation"
+        *ngIf="form.get('password')!.touched && form.get('password')!.invalid"
+      >
+        <small *ngIf="form.get('password')!.errors!['required']">
+          Enter password
+        </small>
+        <small *ngIf="form.get('password')!.errors!['minlength']">
+          Password is too small. It must be at least
+          {{ form.get("password")!.errors!["minlength"]!["requiredLength"] }},
+          now
+          {{ form.get("password")!.errors!["minlength"]!["actualLength"] }}
+        </small>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="form.invalid || submitted"
+    >
+      Register
+    </button>
+    <p class="margS"><a routerLink="/login">Sign in</a></p>
+  </form>
+</div>

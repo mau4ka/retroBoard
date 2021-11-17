@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Post, BoardColumn } from './interfaces';
+import { Post, BoardColumn } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +24,12 @@ export class PostsService {
   }
 
   updateBoard(nameCont: string, container: any) {
-    console.log(nameCont, container)
-    console.log(`${environment.fbDbUrl}board/${nameCont}.json`)
-    return this.http.patch(`${environment.fbDbUrl}board/${nameCont}/posts.json`, container);
+    console.log(nameCont, container);
+    console.log(`${environment.fbDbUrl}board/${nameCont}.json`);
+    return this.http.patch(
+      `${environment.fbDbUrl}board/${nameCont}/posts.json`,
+      container
+    );
   }
 
   getAll(): Observable<any> {

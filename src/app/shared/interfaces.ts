@@ -1,12 +1,10 @@
-
-
 export interface Board {
-  columns: BoardColumn[]
+  columns: BoardColumn[];
 }
 
 export interface BoardColumn {
   id?: string;
-  posts: Post[]
+  posts: Post[];
 }
 
 export interface Post {
@@ -16,9 +14,10 @@ export interface Post {
   text?: string;
   date?: Date;
   likes: number;
-  comments?: string[] 
+  comments?: string[];
 }
 
-
-
-
+export interface User {
+  email: string;
+  password: string;
+}

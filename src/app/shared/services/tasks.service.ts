@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Task, BoardColumn } from '../interfaces';
+import { Task, BoardColumn, NewBoardColumn } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,11 @@ export class TasksService {
     console.log(task);
 
     return this.http.post(`${environment.fbDbUrl}/board`, task);
+  }
+
+  createColumn(column: NewBoardColumn) {
+    console.log(column)
+    return this.http.post(`${environment.fbDbUrl}/board/column`, column);
   }
 
   updateBoard(idCont: string, container: Task[]) {

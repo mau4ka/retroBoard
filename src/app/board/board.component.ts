@@ -1,4 +1,4 @@
-import { BoardColumn } from './../shared/interfaces';
+import { BoardColumn, NewBoardColumn } from './../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
 import {
   CdkDragDrop,
@@ -10,7 +10,6 @@ import { Task } from '../shared/interfaces';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
-import { Router } from '@angular/router';
 import { AlertService } from '../shared/services/alert.service';
 @Component({
   selector: 'app-board',
@@ -22,7 +21,9 @@ export class BoardComponent implements OnInit {
   pSub!: Subscription;
 
   form!: FormGroup;
+  formColumn!: FormGroup;
   newTaskBox = false;
+  newColumnBox = false
 
   constructor(
     private tasksService: TasksService,
@@ -57,7 +58,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  submit() {
+  addTask() {
     if (this.form.invalid) {
       return;
     }
@@ -79,6 +80,23 @@ export class BoardComponent implements OnInit {
     this.form.reset();
   }
 
+  addColumn() {
+    if (this.formColumn.invalid) {
+      return;
+    }
+    console.log(this.formColumn.value);
+    let column: NewBoardColumn = {
+      name: this.formColumn.value.columnName
+    };
+
+    this.tasksService.createColumn(column).subscribe();
+    this.tasks.push({...column, tasks: []})
+
+    this.alert.success('You add new column!');
+
+    this.formColumn.reset();
+  }
+
   ngOnInit(): void {
     this.pSub = this.tasksService.getAll().subscribe((tasks) => {
       this.tasks = tasks[0].tasks;
@@ -90,6 +108,12 @@ export class BoardComponent implements OnInit {
         Validators.minLength(3),
       ]),
       column: new FormControl(null, Validators.required),
+    });
+    this.formColumn= new FormGroup({
+      columnName: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+      ])
     });
   }
 }

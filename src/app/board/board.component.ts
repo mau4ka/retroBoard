@@ -27,6 +27,10 @@ export class BoardComponent implements OnInit {
 
   catIcon = false;
 
+  formModel!: any;
+
+  selectedStyles: string[] = [];
+
   form!: FormGroup;
   formColumn!: FormGroup;
   newTaskBox = false;
@@ -38,6 +42,26 @@ export class BoardComponent implements OnInit {
     private alert: AlertService,
     private router: Router
   ) {}
+
+  showComm(taskId: string) {
+    if (this.selectedStyles.includes(taskId)) {
+      this.selectedStyles = this.selectedStyles.filter((el) => el !== taskId);
+    } else {
+      this.selectedStyles.push(taskId);
+    }
+  }
+
+  addComm(idCont: string, idTask: string, text: string): void {
+    if (idCont && idTask) {
+      let newComm = {
+        id: idCont,
+        idTask,
+        text,
+      };
+      this.tasksService.addComment(newComm).subscribe();
+      this.getBoard();
+    }
+  }
 
   logOut() {
     console.log('mm');

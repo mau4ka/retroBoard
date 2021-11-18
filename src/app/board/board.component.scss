@@ -156,3 +156,26 @@
   color: red;
   cursor: pointer;
 }
+
+.comment {
+  border: 1px dashed black;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.none {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.input-comm {
+  width: 90%;
+}
+
+.form-comm {
+  display: flex;
+  flex-direction: row;
+}

@@ -1,3 +1,4 @@
+import { NewComment } from './../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
@@ -30,6 +31,11 @@ export class TasksService {
     return this.http.patch(`${environment.fbDbUrl}/board/column`, newColumn);
   }
 
+  addComment(newComm: NewComment) {
+    console.log(newComm);
+    return this.http.put(`${environment.fbDbUrl}/board/comm`, newComm);
+  }
+
   setLike(idColumn: string, idTask: string) {
     let like = {
       id: idColumn,
@@ -44,7 +50,6 @@ export class TasksService {
         if (response) {
           let board = [];
           for (let column in response) {
-            console.log(column);
             let mau = Object.keys(response[column]).map((key) => ({
               ...response[column][key],
               id: key,

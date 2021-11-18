@@ -12,13 +12,24 @@ export interface NewBoardColumn {
   name: string;
 }
 
+export interface Comment {
+  text: string;
+  author: string;
+}
+
+export interface NewComment {
+  text: string;
+  idTask: string;
+  id: string;
+}
+
 export interface Task {
   id?: string;
   _id?: string;
   text: string;
   likes?: string[];
   author?: string;
-  comments?: [];
+  comments?: Comment[];
 }
 
 export interface User {

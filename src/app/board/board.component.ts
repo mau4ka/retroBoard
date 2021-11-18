@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -18,18 +20,34 @@ import { AlertService } from '../shared/services/alert.service';
 })
 export class BoardComponent implements OnInit {
   tasks: BoardColumn[] = [];
+  userName!: string;
+  userId!: string;
   pSub!: Subscription;
+  uSub!: Subscription;
+
+  catIcon = false;
 
   form!: FormGroup;
   formColumn!: FormGroup;
   newTaskBox = false;
-  newColumnBox = false
+  newColumnBox = false;
 
   constructor(
     private tasksService: TasksService,
     public auth: AuthService,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router
   ) {}
+
+  logOut() {
+    console.log('mm');
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+
+  heartType(oneTask: Task) {
+    return oneTask.likes?.includes(this.userId) ? 'red' : 'black';
+  }
 
   drop(event: CdkDragDrop<Task[]>, taskId: string) {
     console.log(event);
@@ -58,6 +76,12 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  getBoard() {
+    this.pSub = this.tasksService.getAll().subscribe((tasks) => {
+      this.tasks = tasks[0].tasks;
+    });
+  }
+
   addTask() {
     if (this.form.invalid) {
       return;
@@ -69,11 +93,12 @@ export class BoardComponent implements OnInit {
     };
 
     this.tasksService.create(task).subscribe();
-    for (let i = 0; i < this.tasks.length; i++) {
-      if (this.tasks[i]._id === this.form.value.column) {
-        this.tasks[i].tasks.push(task);
-      }
-    }
+    // for (let i = 0; i < this.tasks.length; i++) {
+    //   if (this.tasks[i]._id === this.form.value.column) {
+    //     this.tasks[i].tasks.push(task);
+    //   }
+    // }
+    this.getBoard();
 
     this.alert.success('You add new task!');
 
@@ -86,22 +111,32 @@ export class BoardComponent implements OnInit {
     }
     console.log(this.formColumn.value);
     let column: NewBoardColumn = {
-      name: this.formColumn.value.columnName
+      name: this.formColumn.value.columnName,
     };
 
     this.tasksService.createColumn(column).subscribe();
-    this.tasks.push({...column, tasks: []})
+    // this.tasks.push({...column, tasks: []})
 
     this.alert.success('You add new column!');
 
     this.formColumn.reset();
+    this.getBoard();
+  }
+
+  addLike(idColumn: string, idTask: string) {
+    this.tasksService.setLike(idColumn, idTask).subscribe();
+
+    this.getBoard();
   }
 
   ngOnInit(): void {
-    this.pSub = this.tasksService.getAll().subscribe((tasks) => {
-      this.tasks = tasks[0].tasks;
-      console.log(this.tasks);
+    this.getBoard();
+
+    this.uSub = this.tasksService.getUser().subscribe((user) => {
+      this.userName = user.name;
+      this.userId = user.userId;
     });
+
     this.form = new FormGroup({
       text: new FormControl(null, [
         Validators.required,
@@ -109,11 +144,11 @@ export class BoardComponent implements OnInit {
       ]),
       column: new FormControl(null, Validators.required),
     });
-    this.formColumn= new FormGroup({
+    this.formColumn = new FormGroup({
       columnName: new FormControl(null, [
         Validators.required,
         Validators.minLength(3),
-      ])
+      ]),
     });
   }
 }

@@ -17,7 +17,7 @@ export class TasksService {
   }
 
   createColumn(column: NewBoardColumn) {
-    console.log(column)
+    console.log(column);
     return this.http.post(`${environment.fbDbUrl}/board/column`, column);
   }
 
@@ -28,6 +28,14 @@ export class TasksService {
     };
     console.log(newColumn);
     return this.http.patch(`${environment.fbDbUrl}/board/column`, newColumn);
+  }
+
+  setLike(idColumn: string, idTask: string) {
+    let like = {
+      id: idColumn,
+      idTask,
+    };
+    return this.http.patch(`${environment.fbDbUrl}/board/like`, like);
   }
 
   getAll(): Observable<any> {
@@ -55,7 +63,15 @@ export class TasksService {
     );
   }
 
-  remove(id: string | undefined): Observable<void> {
-    return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`);
+  getUser(): Observable<any> {
+    return this.http.get(`${environment.fbDbUrl}/board/user`).pipe(
+      map((response: any) => {
+        if (response) {
+          return response;
+        } else {
+          return;
+        }
+      })
+    );
   }
 }

@@ -8,13 +8,13 @@ export interface BoardColumn {
   tasks: Task[];
 }
 
-
 export interface NewBoardColumn {
   name: string;
 }
 
 export interface Task {
   id?: string;
+  _id?: string;
   text: string;
   likes?: string[];
   author?: string;

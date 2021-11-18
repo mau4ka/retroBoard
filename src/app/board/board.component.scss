@@ -18,6 +18,7 @@
   color: rgb(0, 0, 0);
   margin: 10px;
   cursor: pointer;
+  height: 75px;
 
 }
 
@@ -115,4 +116,43 @@
   max-width: 100%;
   align-items: center;
   gap: 10px;
+}
+
+.black {
+  color: black
+}
+
+.red {
+  color: red
+}
+
+.heart {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.cat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.log-out {
+  background: black;
+  padding: 10px;
+  position: absolute;
+  margin: 10px;
+  padding: 15px;
+  right: 0;
+  top: 10%;
+  text-align: right;
+}
+
+.log {
+  color: red;
+  cursor: pointer;
 }

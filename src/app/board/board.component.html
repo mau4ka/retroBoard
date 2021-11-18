@@ -7,6 +7,20 @@
     <button (click)="newColumnBox = !newColumnBox" class="plus-button">
       &#10010; column
     </button>
+
+    <img
+      (click)="catIcon = !catIcon"
+      class="cat-icon pointer"
+      src="../../assets/catIcon.png"
+      alt=""
+    />
+    <div *ngIf="catIcon" class="log-out">
+      <p>
+        {{ userName }}
+        <span class="pointer" (click)="catIcon = !catIcon">&#10006;</span>
+      </p>
+      <p class="log" (click)="logOut()">LogOut</p>
+    </div>
   </div>
 </header>
 
@@ -68,13 +82,22 @@
     />
     <div
       class="validation"
-      *ngIf="formColumn.get('columnName')!.touched && formColumn.get('columnName')!.invalid"
+      *ngIf="
+        formColumn.get('columnName')!.touched &&
+        formColumn.get('columnName')!.invalid
+      "
     >
-      <small *ngIf="formColumn.get('columnName')!.errors!['required']"> Enter column name </small>
+      <small *ngIf="formColumn.get('columnName')!.errors!['required']">
+        Enter column name
+      </small>
       <small *ngIf="formColumn.get('columnName')!.errors!['minlength']">
         Column name is too short. It must be at least
-        {{ formColumn.get("columnName")!.errors!["minlength"]!["requiredLength"] }}, now
-        {{ formColumn.get("columnName")!.errors!["minlength"]!["actualLength"] }}
+        {{
+          formColumn.get("columnName")!.errors!["minlength"]!["requiredLength"]
+        }}, now
+        {{
+          formColumn.get("columnName")!.errors!["minlength"]!["actualLength"]
+        }}
       </small>
     </div>
   </div>
@@ -83,7 +106,6 @@
     Add
   </button>
 </form>
-
 
 <div class="board-container">
   <div cdkDropListGroup class="board">
@@ -98,8 +120,19 @@
         id="{{ task._id }}"
       >
         <div class="example-box" *ngFor="let item of task.tasks" cdkDrag>
-          {{ item.text }} <br>
+          {{ item.text }} <br />
           <p>Auhor: {{ item.author }}</p>
+          <div>
+            <p>
+              {{ item.likes?.length }}
+              <span
+                (click)="addLike(task._id || '', item._id || '')"
+                class="heart"
+                [ngClass]="heartType(item)"
+                >&#10084;</span
+              >
+            </p>
+          </div>
         </div>
       </div>
     </div>

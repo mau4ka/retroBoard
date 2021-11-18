@@ -22,6 +22,10 @@ export class RegisterPageComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
       ]),
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
     });
   }
 
@@ -34,6 +38,7 @@ export class RegisterPageComponent implements OnInit {
     const user: User = {
       email: this.form.value.email,
       password: this.form.value.password,
+      name: this.form.value.name
     };
 
     this.auth.register(user).subscribe(

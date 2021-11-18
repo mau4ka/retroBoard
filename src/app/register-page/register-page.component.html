@@ -51,6 +51,30 @@
       </div>
     </div>
 
+    <div
+      class="form-control"
+      [ngClass]="{
+        invalid: form.get('name')!.touched && form.get('name')!.invalid
+      }"
+    >
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name" />
+      <div
+        class="validation"
+        *ngIf="form.get('name')!.touched && form.get('name')!.invalid"
+      >
+        <small *ngIf="form.get('name')!.errors!['required']">
+          Enter name
+        </small>
+        <small *ngIf="form.get('name')!.errors!['minlength']">
+          Name is too small. It must be at least
+          {{ form.get("name")!.errors!["minlength"]!["requiredLength"] }},
+          now
+          {{ form.get("name")!.errors!["minlength"]!["actualLength"] }}
+        </small>
+      </div>
+    </div>
+
     <button
       type="submit"
       class="btn btn-primary"

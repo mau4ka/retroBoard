@@ -27,8 +27,6 @@ export class BoardComponent implements OnInit {
 
   catIcon = false;
 
-  formModel!: any;
-
   selectedStyles: string[] = [];
 
   form!: FormGroup;
@@ -58,8 +56,9 @@ export class BoardComponent implements OnInit {
         idTask,
         text,
       };
-      this.tasksService.addComment(newComm).subscribe();
-      this.getBoard();
+      this.tasksService.addComment(newComm).subscribe(() => {
+        this.getBoard();
+      });
     }
   }
 
@@ -110,22 +109,15 @@ export class BoardComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    console.log(this.form.value);
     let task: Task = {
       text: this.form.value.text,
       id: this.form.value.column,
     };
 
-    this.tasksService.create(task).subscribe();
-    // for (let i = 0; i < this.tasks.length; i++) {
-    //   if (this.tasks[i]._id === this.form.value.column) {
-    //     this.tasks[i].tasks.push(task);
-    //   }
-    // }
-    this.getBoard();
-
+    this.tasksService.create(task).subscribe(() => {
+      this.getBoard();
+    });
     this.alert.success('You add new task!');
-
     this.form.reset();
   }
 
@@ -138,19 +130,19 @@ export class BoardComponent implements OnInit {
       name: this.formColumn.value.columnName,
     };
 
-    this.tasksService.createColumn(column).subscribe();
-    // this.tasks.push({...column, tasks: []})
+    this.tasksService.createColumn(column).subscribe(() => {
+      this.getBoard();
+    });
 
     this.alert.success('You add new column!');
 
     this.formColumn.reset();
-    this.getBoard();
   }
 
   addLike(idColumn: string, idTask: string) {
-    this.tasksService.setLike(idColumn, idTask).subscribe();
-
-    this.getBoard();
+    this.tasksService.setLike(idColumn, idTask).subscribe(() => {
+      this.getBoard();
+    });
   }
 
   ngOnInit(): void {

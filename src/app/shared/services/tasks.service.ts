@@ -1,9 +1,9 @@
-import { NewComment } from './../interfaces';
+import { BoardColumn, getUser, NewComment } from './../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Task, BoardColumn, NewBoardColumn } from '../interfaces';
+import { Task, NewBoardColumn } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -12,14 +12,27 @@ export class TasksService {
   constructor(private http: HttpClient) {}
 
   create(task: Task) {
-    console.log(task);
-
-    return this.http.post(`${environment.fbDbUrl}/board`, task);
+    return this.http.post(`${environment.fbDbUrl}/board`, task).pipe(
+      map((response) => {
+        if (response) {
+          return response;
+        } else {
+          return;
+        }
+      })
+    );
   }
 
   createColumn(column: NewBoardColumn) {
-    console.log(column);
-    return this.http.post(`${environment.fbDbUrl}/board/column`, column);
+    return this.http.post(`${environment.fbDbUrl}/board/column`, column).pipe(
+      map((response) => {
+        if (response) {
+          return response;
+        } else {
+          return;
+        }
+      })
+    );
   }
 
   updateBoard(idCont: string, container: Task[]) {
@@ -27,13 +40,29 @@ export class TasksService {
       id: idCont,
       newTasks: container,
     };
-    console.log(newColumn);
-    return this.http.patch(`${environment.fbDbUrl}/board/column`, newColumn);
+    return this.http
+      .patch(`${environment.fbDbUrl}/board/column`, newColumn)
+      .pipe(
+        map((response) => {
+          if (response) {
+            return response;
+          } else {
+            return;
+          }
+        })
+      );
   }
 
   addComment(newComm: NewComment) {
-    console.log(newComm);
-    return this.http.put(`${environment.fbDbUrl}/board/comm`, newComm);
+    return this.http.put(`${environment.fbDbUrl}/board/comm`, newComm).pipe(
+      map((response) => {
+        if (response) {
+          return response;
+        } else {
+          return;
+        }
+      })
+    );
   }
 
   setLike(idColumn: string, idTask: string) {
@@ -41,13 +70,22 @@ export class TasksService {
       id: idColumn,
       idTask,
     };
-    return this.http.patch(`${environment.fbDbUrl}/board/like`, like);
+    return this.http.patch(`${environment.fbDbUrl}/board/like`, like).pipe(
+      map((response) => {
+        if (response) {
+          return response;
+        } else {
+          return;
+        }
+      })
+    );
   }
 
-  getAll(): Observable<any> {
+  getAll(): Observable<{ id: string; tasks: BoardColumn[] }[] | []> {
     return this.http.get(`${environment.fbDbUrl}/board`).pipe(
-      map((response: any) => {
+      map((response: { [key: string]: any }) => {
         if (response) {
+          console.log(response);
           let board = [];
           for (let column in response) {
             let mau = Object.keys(response[column]).map((key) => ({
@@ -62,19 +100,28 @@ export class TasksService {
           }
           return board;
         } else {
-          return;
+          return [];
         }
       })
     );
   }
 
-  getUser(): Observable<any> {
+  getUser(): Observable<getUser> {
     return this.http.get(`${environment.fbDbUrl}/board/user`).pipe(
-      map((response: any) => {
+      map((response: { [key: string]: any }) => {
         if (response) {
-          return response;
+          let user = {
+            name: response['name'],
+            email: response['email'],
+            userId: response['userId'],
+          };
+          return user;
         } else {
-          return;
+          return {
+            name: response['name'],
+            email: response['email'],
+            userId: response['userId'],
+          };
         }
       })
     );

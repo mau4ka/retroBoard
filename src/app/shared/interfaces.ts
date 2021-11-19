@@ -37,3 +37,9 @@ export interface User {
   password: string;
   name?: string;
 }
+
+export interface getUser {
+  email: string;
+  name: string;
+  userId: string;
+}

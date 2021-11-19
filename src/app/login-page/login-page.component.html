@@ -1,6 +1,6 @@
 <div class="container">
-  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
-    <h2>Login in board space</h2>
+  <form class="regLogCard" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Login in RetroBoard</h2>
 
     <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
       {{ error }}
@@ -50,14 +50,16 @@
         </small>
       </div>
     </div>
+    <div class="regLogButton">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid || submitted"
+      >
+        Login
+      </button>
+    </div>
 
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="form.invalid || submitted"
-    >
-      Login
-    </button>
     <p class="margS"><a routerLink="/register">Sign up</a></p>
   </form>
 </div>

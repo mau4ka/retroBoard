@@ -1,7 +1,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  background: blueviolet;
+  background: #2b4ae2;
   color: azure;
   padding: 10px;
 }
@@ -11,6 +11,23 @@
   align-items: center;
 
 }
+
+@media (max-width: 500px) {
+  .header {
+    flex-direction: column;
+    justify-content: center;
+
+    h1 {
+      text-align: center;
+    }
+
+    .header-buttons {
+      justify-content: center
+    }
+  }
+}
+
+
 
 .btn-header {
   padding: 10px 20px;
@@ -45,7 +62,6 @@
 .example-list {
   border: solid 1px #ccc;
   min-height: 60px;
-  background: white;
   border-radius: 4px;
   overflow: hidden;
   display: block;
@@ -53,13 +69,13 @@
 
 .example-box {
   padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
+  border-bottom: solid 1px #fff;
+  color: rgb(255 255 255 / 87%);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   cursor: move;
-  background: white;
+  background: #2c195670;
   font-size: 14px;
 }
 
@@ -148,7 +164,7 @@
   margin: 10px;
   padding: 15px;
   right: 0;
-  top: 10%;
+  top: 30px;
   text-align: right;
 }
 
@@ -171,11 +187,20 @@
   display: block;
 }
 
-.input-comm {
-  width: 90%;
-}
+
 
 .form-comm {
   display: flex;
   flex-direction: row;
+
+  button {
+    width: 10%;
+    background: none;
+    border: none;
+    color: azure
+  }
+
+  .input-comm {
+    width: 90%;
+  }
 }

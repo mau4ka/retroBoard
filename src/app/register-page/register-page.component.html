@@ -1,6 +1,6 @@
 <div class="container">
-  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
-    <h2>Register in board space</h2>
+  <form class="regLogCard" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Register in RetroBoard</h2>
 
     <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
       {{ error }}
@@ -68,20 +68,20 @@
         </small>
         <small *ngIf="form.get('name')!.errors!['minlength']">
           Name is too small. It must be at least
-          {{ form.get("name")!.errors!["minlength"]!["requiredLength"] }},
-          now
+          {{ form.get("name")!.errors!["minlength"]!["requiredLength"] }}, now
           {{ form.get("name")!.errors!["minlength"]!["actualLength"] }}
         </small>
       </div>
     </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="form.invalid || submitted"
-    >
-      Register
-    </button>
+    <div class="regLogButton">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid || submitted"
+      >
+        Register
+      </button>
+    </div>
     <p class="margS"><a routerLink="/login">Sign in</a></p>
   </form>
 </div>

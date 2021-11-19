@@ -20,6 +20,9 @@ body {
   line-height: 1.6;
   background-color: #fff;
   color: #333;
+  background-image: url(./assets/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .center {
@@ -38,9 +41,18 @@ form {
   margin: 0 auto;
 }
 
-.card {
+.regLogCard {
   padding: 1rem;
   border: #ccc 1px dotted;
+  margin-top: 30px;
+  background: #ffffff70;
+
+  h2,
+  .regLogButton {
+    text-align: center;
+  }
+
+
 
 }
 

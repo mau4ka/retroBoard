@@ -1,5 +1,5 @@
 <header class="header">
-  <h1>RetroBoard</h1>
+  <h1 class="pointer" routerLink="/">RetroBoard</h1>
   <div class="header-buttons">
     <button (click)="newTaskBox = !newTaskBox" class="plus-button">
       &#10010; task
@@ -107,7 +107,10 @@
   </button>
 </form>
 
-<div class="board-container">
+<ng-template #load>
+  <app-preloader></app-preloader>
+</ng-template>
+<div *ngIf="loadingEnd; else load" class="board-container">
   <div cdkDropListGroup class="board">
     <div class="example-container" *ngFor="let task of tasks">
       <h2 class="center">{{ task.name }}</h2>

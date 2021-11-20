@@ -19,6 +19,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
+
+  loadingEnd = false
   tasks: BoardColumn[] = [];
   userName!: string;
   userId!: string;
@@ -102,6 +104,7 @@ export class BoardComponent implements OnInit {
   getBoard() {
     this.pSub = this.tasksService.getAll().subscribe((tasks) => {
       this.tasks = tasks[0].tasks;
+      this.loadingEnd = true
     });
   }
 

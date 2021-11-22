@@ -12,6 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-board',
@@ -25,6 +26,7 @@ export class BoardPageComponent implements OnInit {
   userId!: string;
   pSub!: Subscription;
   uSub!: Subscription;
+  fileName = 'ExcelSheet.xlsx';
 
   catIcon = false;
 
@@ -168,5 +170,15 @@ export class BoardPageComponent implements OnInit {
         Validators.minLength(3),
       ]),
     });
+  }
+
+  exportexcel(): void {
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    XLSX.writeFile(wb, this.fileName);
   }
 }

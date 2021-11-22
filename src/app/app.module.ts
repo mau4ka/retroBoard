@@ -13,6 +13,7 @@ import { BoardPageComponent } from './board-page/board-page.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { PreloaderComponent } from './shared/components/preloader/preloader.component';
 import { AuthInterceptor } from './shared/auth.interseptor';
+import { SvgHeartComponent } from './shared/components/svg-heart/svg-heart.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -29,6 +30,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MainPageComponent,
     AlertComponent,
     PreloaderComponent,
+    SvgHeartComponent,
   ],
   imports: [
     BrowserModule,

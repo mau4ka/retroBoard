@@ -1,5 +1,5 @@
 import { BoardColumn, NewBoardColumn } from '../shared/interfaces';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -19,23 +19,23 @@ import * as XLSX from 'xlsx';
   templateUrl: './board-page.component.html',
   styleUrls: ['./board-page.component.scss'],
 })
-export class BoardPageComponent implements OnInit {
-  loadingEnd = false;
+export class BoardPageComponent implements OnInit, OnDestroy {
   tasks: BoardColumn[] = [];
+  selectedStyles: string[] = [];
   userName!: string;
   userId!: string;
+
   pSub!: Subscription;
   uSub!: Subscription;
+
   fileName = 'ExcelSheet.xlsx';
-
-  catIcon = false;
-
-  selectedStyles: string[] = [];
 
   form!: FormGroup;
   formColumn!: FormGroup;
   newTaskBox = false;
   newColumnBox = false;
+  catIcon = false;
+  loadingEnd = false;
 
   constructor(
     private tasksService: TasksService,
@@ -43,6 +43,29 @@ export class BoardPageComponent implements OnInit {
     private alert: AlertService,
     private router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.getBoard();
+
+    this.uSub = this.tasksService.getUser().subscribe((user) => {
+      this.userName = user.name;
+      this.userId = user.userId;
+    });
+
+    this.form = new FormGroup({
+      text: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      column: new FormControl(null, Validators.required),
+    });
+    this.formColumn = new FormGroup({
+      columnName: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+    });
+  }
 
   logOut() {
     this.auth.logout();
@@ -175,26 +198,13 @@ export class BoardPageComponent implements OnInit {
     XLSX.writeFile(wb, this.fileName);
   }
 
-  ngOnInit(): void {
-    this.getBoard();
+  ngOnDestroy(): void {
+    if (this.pSub) {
+      this.pSub.unsubscribe();
+    }
 
-    this.uSub = this.tasksService.getUser().subscribe((user) => {
-      this.userName = user.name;
-      this.userId = user.userId;
-    });
-
-    this.form = new FormGroup({
-      text: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      column: new FormControl(null, Validators.required),
-    });
-    this.formColumn = new FormGroup({
-      columnName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-    });
+    if (this.uSub) {
+      this.uSub.unsubscribe();
+    }
   }
 }

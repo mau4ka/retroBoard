@@ -44,39 +44,19 @@ export class BoardPageComponent implements OnInit {
     private router: Router
   ) {}
 
-  showComm(taskId: string) {
-    if (this.selectedStyles.includes(taskId)) {
-      this.selectedStyles = this.selectedStyles.filter((el) => el !== taskId);
-    } else {
-      this.selectedStyles.push(taskId);
-    }
-  }
-
-  addComm(idCont: string, idTask: string, text: string): void {
-    if (idCont && idTask) {
-      let newComm = {
-        id: idCont,
-        idTask,
-        text,
-      };
-      this.tasksService.addComment(newComm).subscribe(() => {
-        this.getBoard();
-      });
-    }
-  }
-
   logOut() {
-    console.log('mm');
     this.auth.logout();
     this.router.navigate(['/login']);
   }
 
-  heartType(oneTask: Task) {
-    return oneTask.likes?.includes(this.userId) ? 'red' : 'black';
+  getBoard() {
+    this.pSub = this.tasksService.getAll().subscribe((tasks) => {
+      this.tasks = tasks[0].tasks;
+      this.loadingEnd = true;
+    });
   }
 
   drop(event: CdkDragDrop<Task[]>, taskId: string) {
-    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -84,7 +64,7 @@ export class BoardPageComponent implements OnInit {
         event.currentIndex
       );
       this.tasksService
-        .updateBoard(event.container.id, event.container.data)
+        .updateColumn(event.container.id, event.container.data)
         .subscribe();
     } else {
       transferArrayItem(
@@ -94,19 +74,12 @@ export class BoardPageComponent implements OnInit {
         event.currentIndex
       );
       this.tasksService
-        .updateBoard(event.container.id, event.container.data)
+        .updateColumn(event.container.id, event.container.data)
         .subscribe();
       this.tasksService
-        .updateBoard(event.previousContainer.id, event.previousContainer.data)
+        .updateColumn(event.previousContainer.id, event.previousContainer.data)
         .subscribe();
     }
-  }
-
-  getBoard() {
-    this.pSub = this.tasksService.getAll().subscribe((tasks) => {
-      this.tasks = tasks[0].tasks;
-      this.loadingEnd = true;
-    });
   }
 
   addTask() {
@@ -129,7 +102,7 @@ export class BoardPageComponent implements OnInit {
     if (this.formColumn.invalid) {
       return;
     }
-    console.log(this.formColumn.value);
+
     let column: NewBoardColumn = {
       name: this.formColumn.value.columnName,
     };
@@ -143,10 +116,63 @@ export class BoardPageComponent implements OnInit {
     this.formColumn.reset();
   }
 
+  deleteTask(idCol: string, idTask: string) {
+    if (idCol && idTask) {
+      let result = confirm('You really want delete task?');
+      if (result) {
+        this.tasksService.deleteTask(idCol, idTask).subscribe(() => {
+          this.getBoard();
+        });
+      }
+    }
+  }
+
+  deleteColumn(idCol: string) {
+    if (idCol) {
+      let result = confirm('You really want delete column?');
+      if (result) {
+        this.tasksService.deleteColumn(idCol).subscribe(() => {
+          this.getBoard();
+        });
+      }
+    }
+  }
+
   addLike(idColumn: string, idTask: string) {
     this.tasksService.setLike(idColumn, idTask).subscribe(() => {
       this.getBoard();
     });
+  }
+
+  heartType(oneTask: Task) {
+    return oneTask.likes?.includes(this.userId) ? 'red' : 'black';
+  }
+  showComm(taskId: string) {
+    if (this.selectedStyles.includes(taskId)) {
+      this.selectedStyles = this.selectedStyles.filter((el) => el !== taskId);
+    } else {
+      this.selectedStyles.push(taskId);
+    }
+  }
+
+  addComm(idCol: string, idTask: string, text: string): void {
+    if (idCol && idTask) {
+      let newComm = {
+        text,
+      };
+      this.tasksService.addComment(newComm, idCol, idTask).subscribe(() => {
+        this.getBoard();
+      });
+    }
+  }
+  exportexcel(): void {
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    XLSX.writeFile(wb, this.fileName);
   }
 
   ngOnInit(): void {
@@ -170,15 +196,5 @@ export class BoardPageComponent implements OnInit {
         Validators.minLength(3),
       ]),
     });
-  }
-
-  exportexcel(): void {
-    let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    XLSX.writeFile(wb, this.fileName);
   }
 }

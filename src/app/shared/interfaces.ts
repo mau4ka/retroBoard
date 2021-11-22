@@ -19,8 +19,6 @@ export interface Comment {
 
 export interface NewComment {
   text: string;
-  idTask: string;
-  id: string;
 }
 
 export interface Task {

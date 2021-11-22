@@ -134,7 +134,10 @@
 <div *ngIf="loadingEnd; else load" class="board-container">
   <div cdkDropListGroup class="board">
     <div class="example-container" *ngFor="let task of tasks">
-      <h2 class="center">{{ task.name }}</h2>
+      <div class="column-name-del">
+        <h2 class="center">{{ task.name }}</h2>
+        <button (click)="deleteColumn(task._id || '')">&#10006;</button>
+      </div>
 
       <div
         cdkDropList
@@ -144,8 +147,15 @@
         id="{{ task._id }}"
       >
         <div class="example-box" *ngFor="let item of task.tasks" cdkDrag>
-          {{ item.text }} <br />
-          <p>Auhor: {{ item.author }}</p>
+          <div class="task-name-del">
+            <p>{{ item.text }}</p>
+            <button (click)="deleteTask(task._id || '', item._id || '')">
+              &#10006;
+            </button>
+          </div>
+
+          <p>Author: {{ item.author }}</p>
+
           <div>
             <p>
               {{ item.likes?.length }}
@@ -222,7 +232,7 @@
                 type="text"
                 id="comment"
                 #comment
-              /><button type="submit">&#10010;</button>
+              /><button class="pointer" type="submit">&#10010;</button>
             </form>
           </div>
         </div>

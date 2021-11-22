@@ -11,71 +11,22 @@ import { Task, NewBoardColumn } from '../interfaces';
 export class TasksService {
   constructor(private http: HttpClient) {}
 
-  create(task: Task) {
-    return this.http.post(`${environment.fbDbUrl}/board`, task).pipe(
-      map((response) => {
+  getUser(): Observable<getUser> {
+    return this.http.get(`${environment.fbDbUrl}/board/user`).pipe(
+      map((response: { [key: string]: any }) => {
         if (response) {
-          return response;
+          let user = {
+            name: response['name'],
+            email: response['email'],
+            userId: response['userId'],
+          };
+          return user;
         } else {
-          return;
-        }
-      })
-    );
-  }
-
-  createColumn(column: NewBoardColumn) {
-    return this.http.post(`${environment.fbDbUrl}/board/column`, column).pipe(
-      map((response) => {
-        if (response) {
-          return response;
-        } else {
-          return;
-        }
-      })
-    );
-  }
-
-  updateBoard(idCont: string, container: Task[]) {
-    let newColumn = {
-      id: idCont,
-      newTasks: container,
-    };
-    return this.http
-      .patch(`${environment.fbDbUrl}/board/column`, newColumn)
-      .pipe(
-        map((response) => {
-          if (response) {
-            return response;
-          } else {
-            return;
-          }
-        })
-      );
-  }
-
-  addComment(newComm: NewComment) {
-    return this.http.put(`${environment.fbDbUrl}/board/comm`, newComm).pipe(
-      map((response) => {
-        if (response) {
-          return response;
-        } else {
-          return;
-        }
-      })
-    );
-  }
-
-  setLike(idColumn: string, idTask: string) {
-    let like = {
-      id: idColumn,
-      idTask,
-    };
-    return this.http.patch(`${environment.fbDbUrl}/board/like`, like).pipe(
-      map((response) => {
-        if (response) {
-          return response;
-        } else {
-          return;
+          return {
+            name: response['name'],
+            email: response['email'],
+            userId: response['userId'],
+          };
         }
       })
     );
@@ -85,7 +36,6 @@ export class TasksService {
     return this.http.get(`${environment.fbDbUrl}/board`).pipe(
       map((response: { [key: string]: any }) => {
         if (response) {
-          console.log(response);
           let board = [];
           for (let column in response) {
             let mau = Object.keys(response[column]).map((key) => ({
@@ -106,24 +56,100 @@ export class TasksService {
     );
   }
 
-  getUser(): Observable<getUser> {
-    return this.http.get(`${environment.fbDbUrl}/board/user`).pipe(
-      map((response: { [key: string]: any }) => {
+  createColumn(column: NewBoardColumn) {
+    return this.http.post(`${environment.fbDbUrl}/board/column`, column).pipe(
+      map((response) => {
         if (response) {
-          let user = {
-            name: response['name'],
-            email: response['email'],
-            userId: response['userId'],
-          };
-          return user;
+          return response;
         } else {
-          return {
-            name: response['name'],
-            email: response['email'],
-            userId: response['userId'],
-          };
+          return;
         }
       })
     );
+  }
+
+  updateColumn(idCol: string, container: Task[]) {
+    let newColumn = {
+      newTasks: container,
+    };
+    return this.http
+      .patch(`${environment.fbDbUrl}/board/column/${idCol}`, newColumn)
+      .pipe(
+        map((response) => {
+          if (response) {
+            return response;
+          } else {
+            return;
+          }
+        })
+      );
+  }
+
+  deleteColumn(idCol: string) {
+    return this.http
+      .delete(`${environment.fbDbUrl}/board/column/${idCol}`)
+      .pipe(
+        map((response) => {
+          if (response) {
+            return response;
+          } else {
+            return;
+          }
+        })
+      );
+  }
+
+  create(task: Task) {
+    return this.http.post(`${environment.fbDbUrl}/board`, task).pipe(
+      map((response) => {
+        if (response) {
+          return response;
+        } else {
+          return;
+        }
+      })
+    );
+  }
+
+  addComment(newComm: NewComment, idColumn: string, idTask: string) {
+    return this.http
+      .put(`${environment.fbDbUrl}/board/comm/${idColumn}/${idTask}`, newComm)
+      .pipe(
+        map((response) => {
+          if (response) {
+            return response;
+          } else {
+            return;
+          }
+        })
+      );
+  }
+
+  setLike(idColumn: string, idTask: string) {
+    return this.http
+      .patch(`${environment.fbDbUrl}/board/like/${idColumn}/${idTask}`, null)
+      .pipe(
+        map((response) => {
+          if (response) {
+            return response;
+          } else {
+            return;
+          }
+        })
+      );
+  }
+
+  deleteTask(idColumn: string, idTask: string) {
+    return this.http
+      .delete(`${environment.fbDbUrl}/board/del/${idColumn}/${idTask}`)
+      .pipe(
+        map((response) => {
+          if (response) {
+            return response;
+          } else {
+            return;
+          }
+        })
+      );
   }
 }

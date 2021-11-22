@@ -194,3 +194,29 @@
     width: 90%;
   }
 }
+
+.column-name-del,
+.task-name-del {
+  display: flex;
+  flex-direction: row;
+
+  h2 {
+    padding: 10px;
+  }
+
+  button {
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+  }
+}
+
+.column-name-del {
+  justify-content: center;
+}
+
+.task-name-del {
+  justify-content: space-between;
+}

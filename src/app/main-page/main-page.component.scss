@@ -1,0 +1,21 @@
+.retroInfo {
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  .text {
+    max-width: 500px;
+  }
+
+  img {
+    width: 300px;
+    height: 300px;
+  }
+
+  p {
+    margin: 10px;
+  }
+
+}

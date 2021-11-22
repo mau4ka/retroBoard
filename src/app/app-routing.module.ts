@@ -1,10 +1,11 @@
-import { LoginPageComponent } from './login-page/login-page.component';
-import { BoardComponent } from './board/board.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterPageComponent } from './register-page/register-page.component';
+
 import { AuthGuard } from './shared/auth.guard';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { BoardPageComponent } from './board-page/board-page.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'board',
-    component: BoardComponent,
+    component: BoardPageComponent,
     canActivate: [AuthGuard],
   },
   {

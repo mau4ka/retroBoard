@@ -1,18 +1,18 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, Provider } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { BoardComponent } from './board/board.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
-import { AuthInterceptor } from './shared/auth.interseptor';
 import { MainPageComponent } from './main-page/main-page.component';
-import { AlertComponent } from './shared/alert/alert.component';
+import { BoardPageComponent } from './board-page/board-page.component';
+import { AlertComponent } from './shared/components/alert/alert.component';
 import { PreloaderComponent } from './shared/components/preloader/preloader.component';
+import { AuthInterceptor } from './shared/auth.interseptor';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -23,7 +23,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
 @NgModule({
   declarations: [
     AppComponent,
-    BoardComponent,
+    BoardPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
     MainPageComponent,

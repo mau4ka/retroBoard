@@ -1,4 +1,4 @@
-import { BoardColumn, NewBoardColumn } from './../shared/interfaces';
+import { BoardColumn, NewBoardColumn } from '../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
 import {
   CdkDragDrop,
@@ -15,12 +15,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
+  templateUrl: './board-page.component.html',
+  styleUrls: ['./board-page.component.scss'],
 })
-export class BoardComponent implements OnInit {
-
-  loadingEnd = false
+export class BoardPageComponent implements OnInit {
+  loadingEnd = false;
   tasks: BoardColumn[] = [];
   userName!: string;
   userId!: string;
@@ -104,7 +103,7 @@ export class BoardComponent implements OnInit {
   getBoard() {
     this.pSub = this.tasksService.getAll().subscribe((tasks) => {
       this.tasks = tasks[0].tasks;
-      this.loadingEnd = true
+      this.loadingEnd = true;
     });
   }
 

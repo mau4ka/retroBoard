@@ -1,4 +1,4 @@
-import { BoardColumn, NewBoardColumn } from '../shared/interfaces';
+import { BoardColumn, NewBoardColumn } from '../../shared/interfaces';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   CdkDragDrop,
@@ -6,11 +6,11 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { TasksService } from '../shared/services/tasks.service';
-import { Task } from '../shared/interfaces';
+import { Task } from '../../shared/interfaces';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../shared/services/auth.service';
-import { AlertService } from '../shared/services/alert.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { AlertService } from '../../shared/services/alert.service';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 

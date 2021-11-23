@@ -1,9 +1,14 @@
-import { BoardColumn, getUser, NewComment } from './../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import {
+  BoardColumn,
+  getUser,
+  NewBoardColumn,
+  NewComment,
+  Task,
+} from 'src/app/shared/interfaces';
 import { environment } from 'src/environments/environment';
-import { Task, NewBoardColumn } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

@@ -1,19 +1,14 @@
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule, Provider } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { BoardPageComponent } from './board-page/board-page.component';
-import { AlertComponent } from './shared/components/alert/alert.component';
-import { PreloaderComponent } from './shared/components/preloader/preloader.component';
 import { AuthInterceptor } from './shared/auth.interseptor';
-import { SvgHeartComponent } from './shared/components/svg-heart/svg-heart.component';
+import { SharedModule } from './shared/shared.module';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -24,22 +19,11 @@ const INTERCEPTOR_PROVIDER: Provider = {
 @NgModule({
   declarations: [
     AppComponent,
-    BoardPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
     MainPageComponent,
-    AlertComponent,
-    PreloaderComponent,
-    SvgHeartComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    DragDropModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+  imports: [BrowserModule, AppRoutingModule, SharedModule],
   providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent],
 })

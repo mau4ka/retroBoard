@@ -67,6 +67,13 @@
   display: block;
 }
 
+.example-handle {
+  cursor: move;
+  width: 24px;
+  height: 24px;
+  margin: auto 0;
+}
+
 .example-box {
   padding: 20px 10px;
   border-bottom: solid 1px #fff;
@@ -199,6 +206,7 @@
 .task-name-del {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 
   h2 {
     padding: 10px;
@@ -214,9 +222,7 @@
 }
 
 .column-name-del {
-  justify-content: center;
-}
-
-.task-name-del {
-  justify-content: space-between;
+  border: 1px solid white;
+  border-radius: 5px 5px 0 0;
+  padding: 0 10px;
 }

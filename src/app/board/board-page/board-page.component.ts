@@ -79,6 +79,12 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  dropColumn(event: CdkDragDrop<any[]>) {
+    console.log(event.container.data);
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.tasksService.updateBoard(event.container.data).subscribe();
+  }
+
   drop(event: CdkDragDrop<Task[]>, taskId: string) {
     if (event.previousContainer === event.container) {
       moveItemInArray(

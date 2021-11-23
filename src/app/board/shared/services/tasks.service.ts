@@ -61,6 +61,21 @@ export class TasksService {
     );
   }
 
+  updateBoard(board: BoardColumn[]) {
+    let updatedBoard = {
+      board,
+    };
+    return this.http.put(`${environment.fbDbUrl}/board/`, updatedBoard).pipe(
+      map((response) => {
+        if (response) {
+          return response;
+        } else {
+          return;
+        }
+      })
+    );
+  }
+
   createColumn(column: NewBoardColumn) {
     return this.http.post(`${environment.fbDbUrl}/board/column`, column).pipe(
       map((response) => {

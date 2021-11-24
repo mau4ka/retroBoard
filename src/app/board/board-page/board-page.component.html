@@ -132,13 +132,17 @@
 </div>
 
 <div *ngIf="loadingEnd; else load" class="board-container">
+  <button (click)="scrollRigth()" class="scrollButtonR">&#62;</button>
+  <button (click)="scrollLeft()" class="scrollButtonL">&#60;</button>
   <div
     class="board"
+    id="board"
     cdkDropList
     (cdkDropListDropped)="dropColumn($event)"
     [cdkDropListData]="tasks"
     cdkDropListOrientation="horizontal"
     cdkDropListGroup
+    #widgetsContent
   >
     <div class="example-container" *ngFor="let task of tasks" cdkDrag>
       <div class="column-name-del">

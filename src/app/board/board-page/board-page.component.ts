@@ -1,5 +1,11 @@
 import { BoardColumn, NewBoardColumn } from '../../shared/interfaces';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -36,6 +42,9 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   newColumnBox = false;
   catIcon = false;
   loadingEnd = false;
+
+  @ViewChild('widgetsContent', { read: ElementRef })
+  public widgetsContent!: ElementRef<any>;
 
   constructor(
     private tasksService: TasksService,
@@ -202,6 +211,20 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
     XLSX.writeFile(wb, this.fileName);
+  }
+
+  scrollRigth() {
+    this.widgetsContent.nativeElement.scrollTo({
+      left: this.widgetsContent.nativeElement.scrollLeft + 150,
+      behavior: 'smooth',
+    });
+  }
+
+  scrollLeft() {
+    this.widgetsContent.nativeElement.scrollTo({
+      left: this.widgetsContent.nativeElement.scrollLeft - 150,
+      behavior: 'smooth',
+    });
   }
 
   ngOnDestroy(): void {

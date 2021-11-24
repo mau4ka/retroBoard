@@ -41,6 +41,7 @@
 
 .board-container {
   width: 100%;
+  position: relative;
 }
 
 .board {
@@ -48,6 +49,7 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  position: relative;
 }
 
 .example-container {
@@ -225,4 +227,28 @@
   border: 1px solid white;
   border-radius: 5px 5px 0 0;
   padding: 0 10px;
+}
+
+
+.scrollButtonR,
+.scrollButtonL {
+
+  margin: 20px 5px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  background: #4d5578cc;
+  color: #b9fe9d;
+  font-weight: bold;
+  width: 50px;
+  font-size: 40px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+
+.scrollButtonL {
+  float: right;
+
 }

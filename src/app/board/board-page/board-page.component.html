@@ -1,9 +1,6 @@
 <header class="header">
   <h1 class="pointer" routerLink="/">RetroBoard</h1>
   <div class="header-buttons">
-    <button (click)="newTaskBox = !newTaskBox" class="plus-button">
-      &#10010; task
-    </button>
     <button (click)="newColumnBox = !newColumnBox" class="plus-button">
       &#10010; column
     </button>
@@ -33,82 +30,53 @@
   {{ error }}
 </div>
 
-<form
-  *ngIf="newTaskBox"
-  class="add-task-form"
-  [formGroup]="form"
-  (ngSubmit)="addTask()"
->
-  <div>
-    <input
-      class="plus-input"
-      type="text"
-      formControlName="text"
-      placeholder="Enter task"
-    />
-    <div
-      class="validation"
-      *ngIf="form.get('text')!.touched && form.get('text')!.invalid"
-    >
-      <small *ngIf="form.get('text')!.errors!['required']"> Enter task </small>
-      <small *ngIf="form.get('text')!.errors!['minlength']">
-        Task is too short. It must be at least
-        {{ form.get("text")!.errors!["minlength"]!["requiredLength"] }}, now
-        {{ form.get("text")!.errors!["minlength"]!["actualLength"] }}
-      </small>
+<div *ngIf="newColumnBox" class="add-column-box">
+  <form
+    class="add-column-form"
+    [formGroup]="formColumn"
+    (ngSubmit)="addColumn()"
+  >
+    <div>
+      <input
+        class="plus-input"
+        type="text"
+        formControlName="columnName"
+        placeholder="Enter column name"
+      />
+      <div
+        class="validation"
+        *ngIf="
+          formColumn.get('columnName')!.touched &&
+          formColumn.get('columnName')!.invalid
+        "
+      >
+        <small *ngIf="formColumn.get('columnName')!.errors!['required']">
+          Enter column name
+        </small>
+        <small *ngIf="formColumn.get('columnName')!.errors!['minlength']">
+          Column name is too short. It must be at least
+          {{
+            formColumn.get("columnName")!.errors!["minlength"]![
+              "requiredLength"
+            ]
+          }}, now
+          {{
+            formColumn.get("columnName")!.errors!["minlength"]!["actualLength"]
+          }}
+        </small>
+      </div>
     </div>
-  </div>
 
-  <p>Column</p>
-  <select class="plus-select" value="" formControlName="column">
-    <option *ngFor="let task of tasks" value="{{ task._id }}">
-      {{ task.name }}
-    </option>
-  </select>
-  <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-    Add
-  </button>
-</form>
-
-<form
-  *ngIf="newColumnBox"
-  class="add-task-form"
-  [formGroup]="formColumn"
-  (ngSubmit)="addColumn()"
->
-  <div>
-    <input
-      class="plus-input"
-      type="text"
-      formControlName="columnName"
-      placeholder="Enter column name"
-    />
-    <div
-      class="validation"
-      *ngIf="
-        formColumn.get('columnName')!.touched &&
-        formColumn.get('columnName')!.invalid
-      "
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="formColumn.invalid"
     >
-      <small *ngIf="formColumn.get('columnName')!.errors!['required']">
-        Enter column name
-      </small>
-      <small *ngIf="formColumn.get('columnName')!.errors!['minlength']">
-        Column name is too short. It must be at least
-        {{
-          formColumn.get("columnName")!.errors!["minlength"]!["requiredLength"]
-        }}, now
-        {{
-          formColumn.get("columnName")!.errors!["minlength"]!["actualLength"]
-        }}
-      </small>
-    </div>
-  </div>
-
-  <button type="submit" class="btn btn-primary" [disabled]="formColumn.invalid">
-    Add
-  </button>
-</form>
+      Add
+    </button>
+    <button (click)="newColumnBox = false" class="del">X</button>
+  </form>
+</div>
 
 <ng-template #load>
   <app-preloader></app-preloader>
@@ -157,6 +125,13 @@
           </svg>
         </div>
       </div>
+      <form
+        class="form-addTask"
+        (submit)="newTask(addTask.value, task._id || '')"
+      >
+        <input class="input-addTask" type="text" id="addTask" #addTask />
+        <button class="pointer" type="submit">&#10010;</button>
+      </form>
 
       <div
         cdkDropList

@@ -36,7 +36,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
   fileName = 'ExcelSheet.xlsx';
 
-  form!: FormGroup;
   formColumn!: FormGroup;
   newTaskBox = false;
   newColumnBox = false;
@@ -61,13 +60,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       this.userId = user.userId;
     });
 
-    this.form = new FormGroup({
-      text: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      column: new FormControl(null, Validators.required),
-    });
     this.formColumn = new FormGroup({
       columnName: new FormControl(null, [
         Validators.required,
@@ -120,22 +112,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  addTask() {
-    if (this.form.invalid) {
-      return;
-    }
-    let task: Task = {
-      text: this.form.value.text,
-      id: this.form.value.column,
-    };
-
-    this.tasksService.create(task).subscribe(() => {
-      this.getBoard();
-    });
-    this.alert.success('You add new task!');
-    this.form.reset();
-  }
-
   addColumn() {
     if (this.formColumn.invalid) {
       return;
@@ -152,6 +128,21 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.alert.success('You add new column!');
 
     this.formColumn.reset();
+  }
+
+  newTask(taskText: string, columnId: string) {
+    if (taskText && columnId) {
+      console.log(taskText, columnId);
+      let task: Task = {
+        text: taskText,
+        id: columnId,
+      };
+
+      this.tasksService.create(task).subscribe(() => {
+        this.getBoard();
+      });
+      this.alert.success('You add new task!');
+    }
   }
 
   deleteTask(idCol: string, idTask: string) {
@@ -215,14 +206,14 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
   scrollRigth() {
     this.widgetsContent.nativeElement.scrollTo({
-      left: this.widgetsContent.nativeElement.scrollLeft + 150,
+      left: this.widgetsContent.nativeElement.scrollLeft + 400,
       behavior: 'smooth',
     });
   }
 
   scrollLeft() {
     this.widgetsContent.nativeElement.scrollTo({
-      left: this.widgetsContent.nativeElement.scrollLeft - 150,
+      left: this.widgetsContent.nativeElement.scrollLeft - 400,
       behavior: 'smooth',
     });
   }

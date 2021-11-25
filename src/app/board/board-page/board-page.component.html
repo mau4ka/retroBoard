@@ -26,7 +26,7 @@
 
 <app-alert></app-alert>
 
-<div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+<div class="alert alert-danger" *ngIf="tasksService.error$ | async as error">
   {{ error }}
 </div>
 
@@ -112,11 +112,11 @@
     cdkDropListGroup
     #widgetsContent
   >
-    <div class="example-container" *ngFor="let task of tasks" cdkDrag>
+    <div class="column-container" *ngFor="let task of tasks" cdkDrag>
       <div class="column-name-del">
         <button (click)="deleteColumn(task._id || '')">&#10006;</button>
-        <h2 class="center">{{ task.name }}</h2>
-        <div class="example-handle" cdkDragHandle>
+        <h2 class="center">{{ task.name | uppercase }}</h2>
+        <div class="column-handle" cdkDragHandle>
           <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
             <path
               d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
@@ -136,11 +136,11 @@
       <div
         cdkDropList
         [cdkDropListData]="task.tasks"
-        class="example-list"
+        class="colimn-list"
         (cdkDropListDropped)="drop($event, task.name)"
         id="{{ task._id }}"
       >
-        <div class="example-box" *ngFor="let item of task.tasks" cdkDrag>
+        <div class="task-box" *ngFor="let item of task.tasks" cdkDrag>
           <div class="task-name-del">
             <p>{{ item.text }}</p>
             <button (click)="deleteTask(task._id || '', item._id || '')">

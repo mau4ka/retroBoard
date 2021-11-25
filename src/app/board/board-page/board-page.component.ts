@@ -46,7 +46,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public widgetsContent!: ElementRef<any>;
 
   constructor(
-    private tasksService: TasksService,
+    public tasksService: TasksService,
     public auth: AuthService,
     private alert: AlertService,
     private router: Router
@@ -81,7 +81,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   }
 
   dropColumn(event: CdkDragDrop<any[]>) {
-    console.log(event.container.data);
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
     this.tasksService.updateBoard(event.container.data).subscribe();
   }
@@ -132,7 +131,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
   newTask(taskText: string, columnId: string) {
     if (taskText && columnId) {
-      console.log(taskText, columnId);
       let task: Task = {
         text: taskText,
         id: columnId,
@@ -152,6 +150,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         this.tasksService.deleteTask(idCol, idTask).subscribe(() => {
           this.getBoard();
         });
+        this.alert.danger('You delete task!');
       }
     }
   }
@@ -163,6 +162,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         this.tasksService.deleteColumn(idCol).subscribe(() => {
           this.getBoard();
         });
+        this.alert.danger('You delete column!');
       }
     }
   }
@@ -192,6 +192,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       this.tasksService.addComment(newComm, idCol, idTask).subscribe(() => {
         this.getBoard();
       });
+      this.alert.success('You add comment!');
     }
   }
   exportexcel(): void {

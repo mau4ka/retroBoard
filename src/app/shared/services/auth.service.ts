@@ -36,7 +36,6 @@ export class AuthService {
 
   private setToken(res: any) {
     if (res) {
-      console.log(res);
       const expDate = new Date(new Date().getTime() + 259200 * 1000);
       localStorage.setItem('retro-token', res.jwt_token);
       localStorage.setItem('retro-token-exp', expDate.toString());
@@ -58,7 +57,6 @@ export class AuthService {
   }
 
   handleError(error: HttpErrorResponse): ObservableInput<any> {
-    console.log(error.error.message);
     const message = error.error.message;
     this.error$.next(message);
     return throwError(error);

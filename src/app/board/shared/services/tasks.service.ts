@@ -1,6 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import {
+  catchError,
+  map,
+  Observable,
+  ObservableInput,
+  Subject,
+  throwError,
+} from 'rxjs';
 import {
   BoardColumn,
   getUser,
@@ -14,6 +21,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class TasksService {
+  public error$: Subject<string> = new Subject<string>();
+
   constructor(private http: HttpClient) {}
 
   getUser(): Observable<getUser> {
@@ -33,7 +42,8 @@ export class TasksService {
             userId: response['userId'],
           };
         }
-      })
+      }),
+      catchError(this.handleError.bind(this))
     );
   }
 
@@ -57,7 +67,8 @@ export class TasksService {
         } else {
           return [];
         }
-      })
+      }),
+      catchError(this.handleError.bind(this))
     );
   }
 
@@ -72,7 +83,8 @@ export class TasksService {
         } else {
           return;
         }
-      })
+      }),
+      catchError(this.handleError.bind(this))
     );
   }
 
@@ -84,7 +96,8 @@ export class TasksService {
         } else {
           return;
         }
-      })
+      }),
+      catchError(this.handleError.bind(this))
     );
   }
 
@@ -101,7 +114,8 @@ export class TasksService {
           } else {
             return;
           }
-        })
+        }),
+        catchError(this.handleError.bind(this))
       );
   }
 
@@ -115,7 +129,8 @@ export class TasksService {
           } else {
             return;
           }
-        })
+        }),
+        catchError(this.handleError.bind(this))
       );
   }
 
@@ -127,7 +142,8 @@ export class TasksService {
         } else {
           return;
         }
-      })
+      }),
+      catchError(this.handleError.bind(this))
     );
   }
 
@@ -141,7 +157,8 @@ export class TasksService {
           } else {
             return;
           }
-        })
+        }),
+        catchError(this.handleError.bind(this))
       );
   }
 
@@ -155,7 +172,8 @@ export class TasksService {
           } else {
             return;
           }
-        })
+        }),
+        catchError(this.handleError.bind(this))
       );
   }
 
@@ -169,7 +187,14 @@ export class TasksService {
           } else {
             return;
           }
-        })
+        }),
+        catchError(this.handleError.bind(this))
       );
+  }
+
+  handleError(error: HttpErrorResponse): ObservableInput<any> {
+    const message = error.error.message;
+    this.error$.next(message);
+    return throwError(error);
   }
 }

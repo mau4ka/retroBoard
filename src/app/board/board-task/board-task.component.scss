@@ -1,0 +1,44 @@
+.task-name-del {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  h2 {
+    padding: 10px;
+  }
+
+  button {
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+  }
+}
+
+.heart {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.comment {
+  border: 1px dashed black;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.form-comm {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    width: 10%;
+    background: none;
+    border: none;
+    color: azure
+  }
+
+  .input-comm {
+    width: 90%;
+  }
+}

@@ -37,13 +37,17 @@ export class RegisterPageComponent implements OnInit {
     const user: User = {
       email: this.form.value.email,
       password: this.form.value.password,
-      name: this.form.value.name
+      name: this.form.value.name,
     };
 
     this.auth.register(user).subscribe(
       () => {
         this.form.reset();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login'], {
+          queryParams: {
+            success: true,
+          },
+        });
         this.submitted = false;
       },
       () => {

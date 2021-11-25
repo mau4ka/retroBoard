@@ -6,6 +6,10 @@
       {{ error }}
     </div>
 
+    <div class="alert alert-success" *ngIf="message">
+      {{ message }}
+    </div>
+
     <div
       class="form-control"
       [ngClass]="{

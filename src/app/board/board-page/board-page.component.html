@@ -68,58 +68,20 @@
       <div
         cdkDropList
         [cdkDropListData]="task.tasks"
-        class="colimn-list"
+        class="column-list"
         (cdkDropListDropped)="drop($event, task.name)"
         id="{{ task._id }}"
       >
-        <div class="task-box" *ngFor="let item of task.tasks" cdkDrag>
-          <div class="task-name-del">
-            <p>{{ item.text }}</p>
-            <button (click)="deleteTask(task._id || '', item._id || '')">
-              &#10006;
-            </button>
-          </div>
-
-          <p>Author: {{ item.author }}</p>
-
-          <div>
-            <p>
-              {{ item.likes?.length }}
-              <span
-                (click)="addLike(task._id || '', item._id || '')"
-                class="heart"
-                [ngClass]="heartType(item)"
-                >&#10084;</span
-              >
-              <span (click)="showComm(item._id || '')" class="pointer">
-                {{ item.comments?.length }}
-
-                <app-svg-heart></app-svg-heart>
-              </span>
-            </p>
-          </div>
-          <div
-            [ngClass]="
-              selectedStyles.includes(item._id || ' ') ? 'block' : 'none'
-            "
-          >
-            <div class="comment" *ngFor="let com of item.comments">
-              <b>{{ com.author }}</b>
-              <p>{{ com.text }}</p>
-            </div>
-            <form
-              (submit)="addComm(task._id || '', item._id || '', comment.value)"
-              class="form-comm"
-            >
-              <input
-                class="input-comm"
-                type="text"
-                id="comment"
-                #comment
-              /><button class="pointer" type="submit">&#10010;</button>
-            </form>
-          </div>
-        </div>
+        <app-board-task
+          *ngFor="let item of task.tasks"
+          cdkDrag
+          class="task-box"
+          [item]="item"
+          [taskId]="task._id || ''"
+          [userId]="userId"
+          (getB)="onNewCol($event)"
+          [selectedComm]="selectedComm"
+        ></app-board-task>
       </div>
     </div>
   </div>

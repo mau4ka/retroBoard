@@ -24,7 +24,7 @@ import { AlertService } from '../../shared/services/alert.service';
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
   tasks: BoardColumn[] = [];
-  selectedStyles: string[] = [];
+  selectedComm: string[] = [];
   userName!: string;
   userId!: string;
 
@@ -110,18 +110,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteTask(idCol: string, idTask: string) {
-    if (idCol && idTask) {
-      let result = confirm('You really want delete task?');
-      if (result) {
-        this.tasksService.deleteTask(idCol, idTask).subscribe(() => {
-          this.getBoard();
-        });
-        this.alert.danger('You delete task!');
-      }
-    }
-  }
-
   deleteColumn(idCol: string) {
     if (idCol) {
       let result = confirm('You really want delete column?');
@@ -131,35 +119,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         });
         this.alert.danger('You delete column!');
       }
-    }
-  }
-
-  addLike(idColumn: string, idTask: string) {
-    this.tasksService.setLike(idColumn, idTask).subscribe(() => {
-      this.getBoard();
-    });
-  }
-
-  heartType(oneTask: Task) {
-    return oneTask.likes?.includes(this.userId) ? 'red' : 'black';
-  }
-  showComm(taskId: string) {
-    if (this.selectedStyles.includes(taskId)) {
-      this.selectedStyles = this.selectedStyles.filter((el) => el !== taskId);
-    } else {
-      this.selectedStyles.push(taskId);
-    }
-  }
-
-  addComm(idCol: string, idTask: string, text: string): void {
-    if (idCol && idTask) {
-      let newComm = {
-        text,
-      };
-      this.tasksService.addComment(newComm, idCol, idTask).subscribe(() => {
-        this.getBoard();
-      });
-      this.alert.success('You add comment!');
     }
   }
 

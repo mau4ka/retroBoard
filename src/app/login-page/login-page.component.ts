@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { User } from '../shared/interfaces';
 import { AuthService } from '../shared/services/auth.service';
 
@@ -12,8 +12,13 @@ import { AuthService } from '../shared/services/auth.service';
 export class LoginPageComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
+  message!: string;
 
-  constructor(public auth: AuthService, private router: Router) {}
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -22,6 +27,12 @@ export class LoginPageComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
       ]),
+    });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['success']) {
+        this.message = 'You register successfully, now login!';
+      }
     });
   }
 

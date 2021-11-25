@@ -1,0 +1,41 @@
+<div class="task-name-del">
+  <p>{{ item.text }}</p>
+  <button (click)="deleteTask(taskId || '', item._id || '')">&#10006;</button>
+</div>
+
+<p>Author: {{ item.author }}</p>
+
+<div>
+  <p>
+    {{ item.likes?.length }}
+    <span
+      (click)="addLike(taskId || '', item._id || '', like)"
+      class="heart"
+      [ngClass]="heartType(item)"
+      #like
+      >&#10084;</span
+    >
+    <span (click)="showComm(item._id || '')" class="pointer">
+      {{ item.comments?.length }}
+
+      <app-svg-heart></app-svg-heart>
+    </span>
+  </p>
+</div>
+<div [ngClass]="selectedComm.includes(item._id || ' ') ? 'block' : 'none'">
+  <div class="comment" *ngFor="let com of item.comments">
+    <b>{{ com.author }}</b>
+    <p>{{ com.text }}</p>
+  </div>
+  <form
+    (submit)="addComm(taskId || '', item._id || '', comment.value)"
+    class="form-comm"
+  >
+    <input class="input-comm" type="text" id="comment" #comment /><button
+      class="pointer"
+      type="submit"
+    >
+      &#10010;
+    </button>
+  </form>
+</div>

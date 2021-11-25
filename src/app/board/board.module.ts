@@ -10,6 +10,7 @@ import { BoardPageComponent } from './board-page/board-page.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/auth.interseptor';
+import { BoardHeaderComponent } from './board-header/board-header.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -18,7 +19,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
 };
 
 @NgModule({
-  declarations: [BoardPageComponent, SvgHeartComponent, PreloaderComponent],
+  declarations: [BoardPageComponent, SvgHeartComponent, PreloaderComponent, BoardHeaderComponent],
   imports: [CommonModule, BoardRoutingModule, DragDropModule, SharedModule],
   providers: [INTERCEPTOR_PROVIDER],
 })

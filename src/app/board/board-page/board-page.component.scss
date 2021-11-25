@@ -1,44 +1,3 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  background: #4d5578cc;
-  color: #b9fe9d;
-  padding: 10px 20px;
-}
-
-.header-buttons {
-  display: flex;
-  align-items: center;
-
-}
-
-@media (max-width: 500px) {
-  .header {
-    flex-direction: column;
-    justify-content: center;
-
-    h1 {
-      text-align: center;
-    }
-
-    .header-buttons {
-      justify-content: center
-    }
-  }
-}
-
-
-
-.btn-header {
-  padding: 10px 20px;
-  border: 1px solid black;
-  color: rgb(0, 0, 0);
-  margin: 10px;
-  cursor: pointer;
-  height: 75px;
-
-}
-
 .board-container {
   width: 100%;
   position: relative;
@@ -122,50 +81,6 @@
   display: inline;
 }
 
-.plus-button {
-
-  border: 1px solid white;
-  border-radius: 5px;
-  background: transparent;
-  color: rgb(175, 230, 175);
-  cursor: pointer;
-  padding: 10px 20px;
-  margin-right: 10px;
-}
-
-.add-column-box {
-  position: absolute;
-  z-index: 999;
-  position: absolute;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  max-width: 550px;
-
-  .del {
-    width: 10%;
-    background: #25145a;
-    border: none;
-    color: white;
-    padding: 5px;
-  }
-}
-
-.add-column-form {
-  margin: 50px 50px 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 100%;
-  align-items: center;
-  justify-content: center;
-  grid-gap: 10px;
-  grid-gap: 10px;
-  gap: 10px;
-  background: #2c195670;
-  padding: 10px;
-}
-
 .black {
   color: black
 }
@@ -176,32 +91,6 @@
 
 .heart {
   font-size: 20px;
-  cursor: pointer;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.cat-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.log-out {
-  background: black;
-  padding: 10px;
-  position: absolute;
-  margin: 10px;
-  padding: 15px;
-  right: 0;
-  top: 30px;
-  text-align: center;
-}
-
-.log {
-  color: red;
   cursor: pointer;
 }
 
@@ -225,8 +114,6 @@
   .input-comm {
     width: 90%;
   }
-
-
 }
 
 .form-addTask {
@@ -245,8 +132,6 @@
   .input-addTask {
     width: 90%;
   }
-
-
 }
 
 .column-name-del,
@@ -293,11 +178,9 @@
   font-size: 40px;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 998;
 }
-
 
 .scrollButtonL {
   float: right;
-
 }

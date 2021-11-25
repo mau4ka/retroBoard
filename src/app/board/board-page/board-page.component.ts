@@ -1,4 +1,4 @@
-import { BoardColumn, NewBoardColumn } from '../../shared/interfaces';
+import { BoardColumn } from '../../shared/interfaces';
 import {
   Component,
   ElementRef,
@@ -14,11 +14,8 @@ import {
 import { TasksService } from '../shared/services/tasks.service';
 import { Task } from '../../shared/interfaces';
 import { Subscription } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { AlertService } from '../../shared/services/alert.service';
-import { Router } from '@angular/router';
-import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-board',
@@ -34,12 +31,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   pSub!: Subscription;
   uSub!: Subscription;
 
-  fileName = 'ExcelSheet.xlsx';
-
-  formColumn!: FormGroup;
   newTaskBox = false;
-  newColumnBox = false;
-  catIcon = false;
   loadingEnd = false;
 
   @ViewChild('widgetsContent', { read: ElementRef })
@@ -48,8 +40,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   constructor(
     public tasksService: TasksService,
     public auth: AuthService,
-    private alert: AlertService,
-    private router: Router
+    private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -59,18 +50,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       this.userName = user.name;
       this.userId = user.userId;
     });
-
-    this.formColumn = new FormGroup({
-      columnName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-    });
-  }
-
-  logOut() {
-    this.auth.logout();
-    this.router.navigate(['/login']);
   }
 
   getBoard() {
@@ -78,6 +57,12 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       this.tasks = tasks[0].tasks;
       this.loadingEnd = true;
     });
+  }
+
+  onNewCol(event: boolean) {
+    if (event) {
+      this.getBoard();
+    }
   }
 
   dropColumn(event: CdkDragDrop<any[]>) {
@@ -109,24 +94,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         .updateColumn(event.previousContainer.id, event.previousContainer.data)
         .subscribe();
     }
-  }
-
-  addColumn() {
-    if (this.formColumn.invalid) {
-      return;
-    }
-
-    let column: NewBoardColumn = {
-      name: this.formColumn.value.columnName,
-    };
-
-    this.tasksService.createColumn(column).subscribe(() => {
-      this.getBoard();
-    });
-
-    this.alert.success('You add new column!');
-
-    this.formColumn.reset();
   }
 
   newTask(taskText: string, columnId: string) {
@@ -194,15 +161,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       });
       this.alert.success('You add comment!');
     }
-  }
-  exportexcel(): void {
-    let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    XLSX.writeFile(wb, this.fileName);
   }
 
   scrollRigth() {

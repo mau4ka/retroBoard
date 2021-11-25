@@ -129,6 +129,7 @@ button {
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  z-index: 999;
 }
 
 .alert-danger {
@@ -152,4 +153,8 @@ button {
 
 .block {
   display: block;
+}
+
+.pointer {
+  cursor: pointer;
 }

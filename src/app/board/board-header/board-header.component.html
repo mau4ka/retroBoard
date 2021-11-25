@@ -1,0 +1,73 @@
+<header class="header">
+  <h1 class="pointer" routerLink="/">RetroBoard</h1>
+  <div class="header-buttons">
+    <button (click)="newColumnBox = !newColumnBox" class="plus-button">
+      &#10010; column
+    </button>
+    <button *ngIf="loadingEnd" (click)="exportexcel()" class="plus-button">
+      Download board
+    </button>
+
+    <img
+      (click)="catIcon = !catIcon"
+      class="cat-icon pointer"
+      src="../../assets/catIcon.png"
+      alt=""
+    />
+    <div *ngIf="catIcon" class="log-out">
+      <p>
+        {{ userName }}
+        <span class="pointer" (click)="catIcon = !catIcon">&#10006;</span>
+      </p>
+      <p class="log" (click)="logOut()">LogOut</p>
+    </div>
+  </div>
+</header>
+
+<div *ngIf="newColumnBox" class="add-column-box">
+  <form
+    class="add-column-form"
+    [formGroup]="formColumn"
+    (ngSubmit)="addColumn()"
+  >
+    <div>
+      <input
+        class="plus-input"
+        type="text"
+        formControlName="columnName"
+        placeholder="Enter column name"
+      />
+      <div
+        class="validation"
+        *ngIf="
+          formColumn.get('columnName')!.touched &&
+          formColumn.get('columnName')!.invalid
+        "
+      >
+        <small *ngIf="formColumn.get('columnName')!.errors!['required']">
+          Enter column name
+        </small>
+        <small *ngIf="formColumn.get('columnName')!.errors!['minlength']">
+          Column name is too short. It must be at least
+          {{
+            formColumn.get("columnName")!.errors!["minlength"]![
+              "requiredLength"
+            ]
+          }}, now
+          {{
+            formColumn.get("columnName")!.errors!["minlength"]!["actualLength"]
+          }}
+        </small>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="formColumn.invalid"
+    >
+      Add
+    </button>
+    <button (click)="newColumnBox = false" class="del">X</button>
+  </form>
+</div>

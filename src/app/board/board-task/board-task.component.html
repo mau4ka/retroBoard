@@ -8,12 +8,13 @@
 <div>
   <p>
     {{ item.likes?.length }}
-    <span
+    <button
       (click)="addLike(taskId || '', item._id || '', like)"
       class="heart"
       [ngClass]="heartType(item)"
+      [disabled]="heart"
       #like
-      >&#10084;</span
+      >&#10084;</button
     >
     <span (click)="showComm(item._id || '')" class="pointer">
       {{ item.comments?.length }}

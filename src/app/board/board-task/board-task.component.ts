@@ -16,6 +16,8 @@ export class BoardTaskComponent implements OnInit {
   @Input() selectedComm!: string[];
   @Output() getB: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  heart = false
+
   constructor(
     public tasksService: TasksService,
     public auth: AuthService,
@@ -57,7 +59,10 @@ export class BoardTaskComponent implements OnInit {
   }
 
   addLike(idColumn: string, idTask: string, like: any) {
+    console.log('c')
+    this.heart = true
     this.tasksService.setLike(idColumn, idTask).subscribe(() => {
+      this.heart = false
       this.getB.emit(true);
     });
     // if (

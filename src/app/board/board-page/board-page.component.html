@@ -32,8 +32,9 @@
 </div>
 
 <div *ngIf="loadingEnd; else load" class="board-container">
-  <button (click)="scrollRigth()" class="scrollButtonR">&#62;</button>
-  <button (click)="scrollLeft()" class="scrollButtonL">&#60;</button>
+  <button (click)="scrollLeft()" class="scrollButtonL">&#60;</button
+  ><button (click)="scrollRigth()" class="scrollButtonR">&#62;</button>
+
   <div
     class="board"
     id="board"

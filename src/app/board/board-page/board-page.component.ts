@@ -122,7 +122,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  scrollRigth() {
+  scrollRight() {
     this.widgetsContent.nativeElement.scrollTo({
       left: this.widgetsContent.nativeElement.scrollLeft + 360,
       behavior: 'smooth',

@@ -33,7 +33,7 @@
 
 <div *ngIf="loadingEnd; else load" class="board-container">
   <button (click)="scrollLeft()" class="scrollButtonL">&#60;</button
-  ><button (click)="scrollRigth()" class="scrollButtonR">&#62;</button>
+  ><button (click)="scrollRight()" class="scrollButtonR">&#62;</button>
 
   <div
     class="board"
@@ -45,6 +45,19 @@
     cdkDropListGroup
     #widgetsContent
   >
+    <div
+      class="rScrollBox"
+      appScroll
+      scrollDirection="right"
+      [widgetsContent]="widgetsContent"
+    ></div>
+
+    <div
+      class="lScrollBox"
+      appScroll
+      scrollDirection="left"
+      [widgetsContent]="widgetsContent"
+    ></div>
     <div class="column-container" *ngFor="let task of tasks" cdkDrag>
       <div class="column-name-del">
         <button (click)="deleteColumn(task._id || '')">&#10006;</button>

@@ -15,7 +15,7 @@
   max-width: 100%;
   min-width: 300px;
   margin: 0 25px 25px 0;
-  display: inline-block;
+  display: block;
   vertical-align: top;
 }
 
@@ -153,4 +153,22 @@
 
 .scrollButtonR {
   float: right;
+}
+
+.rScrollBox, .lScrollBox {
+  height: -webkit-fill-available;
+  background: transparent;
+  width: 5px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
+.rScrollBox {
+  right: 0;
+}
+
+.lScrollBox {
+  left: 0;
 }

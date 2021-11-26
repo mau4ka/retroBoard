@@ -14,12 +14,12 @@
       [ngClass]="heartType(item)"
       [disabled]="heart"
       #like
-      >&#10084;</button
+      ><app-svg-heart></app-svg-heart></button
     >
     <span (click)="showComm(item._id || '')" class="pointer">
       {{ item.comments?.length }}
 
-      <app-svg-heart></app-svg-heart>
+      <app-svg-comm></app-svg-comm>
     </span>
   </p>
 </div>

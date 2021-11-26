@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./board/board.module').then((m) => m.BoardModule),
   },
+  {
+    path: '**',
+    redirectTo: '/',
+  }
 ];
 
 @NgModule({

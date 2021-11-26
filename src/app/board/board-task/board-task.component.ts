@@ -60,13 +60,13 @@ export class BoardTaskComponent implements OnInit {
     this.tasksService.setLike(idColumn, idTask).subscribe(() => {
       this.getB.emit(true);
     });
-    if (
-      window.getComputedStyle(like).getPropertyValue('color') === 'rgb(0, 0, 0)'
-    ) {
-      like.setAttribute('style', 'color: rgb(255, 0, 0)');
-    } else {
-      like.setAttribute('style', 'color: rgb(0, 0, 0)');
-    }
+    // if (
+    //   window.getComputedStyle(like).getPropertyValue('color') === 'rgb(0, 0, 0)'
+    // ) {
+    //   like.setAttribute('style', 'color: rgb(255, 0, 0)');
+    // } else {
+    //   like.setAttribute('style', 'color: rgb(0, 0, 0)');
+    // }
   }
 
   heartType(oneTask: Task) {

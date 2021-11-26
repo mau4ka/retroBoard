@@ -5,6 +5,10 @@ import { BoardPageComponent } from './board-page/board-page.component';
 
 const routes: Routes = [
   { path: '', component: BoardPageComponent, canActivate: [AuthGuard] },
+  {
+    path: '**',
+    redirectTo: '/board',
+  }
 ];
 
 @NgModule({

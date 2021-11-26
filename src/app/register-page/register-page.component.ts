@@ -6,8 +6,7 @@ import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-register-page',
-  templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss'],
+  templateUrl: './register-page.component.html'
 })
 export class RegisterPageComponent implements OnInit {
   form!: FormGroup;

@@ -1,14 +1,55 @@
 .board-container {
   width: 100%;
   position: relative;
-}
 
-.board {
-  padding: 50px;
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  position: relative;
+  .scrollButtonR,
+  .scrollButtonL {
+
+    margin: 20px 5px;
+    border: 1px solid var(--light-green-color);
+    border-radius: 50%;
+    background: transparent;
+    background: var(--solid-grey-color);
+    color: var(--light-green-color);
+    font-weight: bold;
+    width: 50px;
+    font-size: 40px;
+    position: sticky;
+    top: 0;
+    z-index: 998;
+  }
+
+  .scrollButtonR {
+    float: right;
+  }
+
+  .board {
+    padding: 50px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    position: relative;
+    scroll-snap-type: none;
+
+    .rScrollBox,
+    .lScrollBox {
+      height: -webkit-fill-available;
+      background: transparent;
+      width: 5px;
+      position: fixed;
+      top: 200px;
+      bottom: 0;
+      z-index: 99;
+    }
+
+    .rScrollBox {
+      right: 0;
+    }
+
+    .lScrollBox {
+      left: 0;
+    }
+  }
 }
 
 .column-container {
@@ -18,14 +59,9 @@
   display: block;
 }
 
-@media (max-width: 500px) {
-  .column-container {
-    min-width: 190px;
-  }
-}
 
 .column-list {
-  border: solid 1px #ccc;
+  border: solid 1px var(--light-color);
   min-height: 60px;
   border-radius: 0 0 4px 4px;
   overflow: hidden;
@@ -41,7 +77,7 @@
 
 .task-box {
   padding: 20px 10px;
-  border-bottom: solid 1px #fff;
+  border-bottom: solid 1px var(--light-color);
   color: rgb(255 255 255 / 87%);
   display: flex;
   flex-direction: column;
@@ -75,32 +111,23 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.plus-input {
-  max-width: 500px;
-  display: inline;
-}
-
-.plus-select {
-  width: 200px;
-  display: inline;
-}
-
 
 .form-addTask {
   display: flex;
   flex-direction: row;
-  border: 1px solid white;
+  border: 1px solid var(--light-color);
   background: #2c195670;
 
   button {
     width: 10%;
     background: none;
     border: none;
-    color: azure
+    color: var(--light-color)
   }
 
   .input-addTask {
     width: 90%;
+    border: none;
   }
 }
 
@@ -108,9 +135,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border: 1px solid var(--light-color);
+  border-radius: 5px 5px 0 0;
+  padding: 0 10px;
 
   h2 {
     padding: 10px;
+    font-size: 22px;
   }
 
   button {
@@ -118,56 +149,12 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: red;
+    color: var(--primary-color);
   }
 }
 
-.column-name-del {
-  border: 1px solid white;
-  border-radius: 5px 5px 0 0;
-  padding: 0 10px;
-
-  h2 {
-    font-size: 22px;
+@media (max-width: 500px) {
+  .column-container {
+    min-width: 190px;
   }
-}
-
-
-.scrollButtonR,
-.scrollButtonL {
-
-  margin: 20px 5px;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  background: #4d5578cc;
-  color: #b9fe9d;
-  font-weight: bold;
-  width: 50px;
-  font-size: 40px;
-  position: sticky;
-  top: 0;
-  z-index: 998;
-}
-
-.scrollButtonR {
-  float: right;
-}
-
-.rScrollBox, .lScrollBox {
-  height: -webkit-fill-available;
-  background: transparent;
-  width: 5px;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 99;
-}
-
-.rScrollBox {
-  right: 0;
-}
-
-.lScrollBox {
-  left: 0;
 }

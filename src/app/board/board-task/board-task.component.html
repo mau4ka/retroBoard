@@ -3,9 +3,9 @@
   <button (click)="deleteTask(taskId || '', item._id || '')">&#10006;</button>
 </div>
 
-<p>Author: {{ item.author }}</p>
+<p class="author">Author: {{ item.author }}</p>
 
-<div>
+<div class="like-comm-box">
   <p>
     {{ item.likes?.length }}
     <button
@@ -14,8 +14,9 @@
       [ngClass]="heartType(item)"
       [disabled]="heart"
       #like
-      ><app-svg-heart></app-svg-heart></button
     >
+      <app-svg-heart></app-svg-heart>
+    </button>
     <span (click)="showComm(item._id || '')" class="pointer">
       {{ item.comments?.length }}
 
@@ -23,10 +24,14 @@
     </span>
   </p>
 </div>
-<div [ngClass]="selectedComm.includes(item._id || ' ') ? 'block' : 'none'">
+
+<div
+  class="all-comm-box"
+  [ngClass]="selectedComm.includes(item._id || ' ') ? 'block' : 'none'"
+>
   <div class="comment" *ngFor="let com of item.comments">
     <b>{{ com.author }}</b>
-    <p>{{ com.text }}</p>
+    <p>Author: {{ com.text }}</p>
   </div>
   <form
     (submit)="addComm(taskId || '', item._id || '', comment.value)"

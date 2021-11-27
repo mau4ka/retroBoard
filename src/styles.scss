@@ -3,9 +3,11 @@
 :root {
   --primary-color: #dc3545;
   --warning-color: #333333;
-  --light-color: #f4f4f4;
+  --light-color: #e0e4ea;
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --solid-grey-color: #626a8e;
+  --light-green-color: #b9fe9d;
 }
 
 html {
@@ -22,7 +24,6 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
   color: #333;
   background-image: url(./assets/background.png);
   background-repeat: no-repeat;
@@ -85,8 +86,7 @@ input[type='text'],
 input[type='email'],
 input[type='password'],
 input[type='date'],
-select,
-textarea {
+select {
   display: block;
   width: 100%;
   padding: 0.4rem;
@@ -120,7 +120,7 @@ button {
 
 .btn-primary {
   background: var(--primary-color);
-  color: #fff;
+  color: white;
 }
 
 .alert {
@@ -134,17 +134,17 @@ button {
 
 .alert-danger {
   background: var(--danger-color);
-  color: #fff;
+  color: white;
 }
 
 .alert-success {
   background: var(--success-color);
-  color: #fff;
+  color: white;
 }
 
 .alert-warning {
   background: var(--warning-color);
-  color: #fff;
+  color: white;
 }
 
 .none {

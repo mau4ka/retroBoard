@@ -59,6 +59,14 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  onCommShow(taskId: string) {
+    if (this.selectedComm.includes(taskId)) {
+      this.selectedComm = this.selectedComm.filter((el) => el !== taskId);
+    } else {
+      this.selectedComm.push(taskId);
+    }
+  }
+
   onNewCol(event: boolean) {
     if (event) {
       this.getBoard();

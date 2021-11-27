@@ -66,6 +66,7 @@
           <app-svg-handle></app-svg-handle>
         </div>
       </div>
+
       <form
         class="form-addTask"
         (submit)="newTask(addTask.value, task._id || '')"
@@ -89,6 +90,7 @@
           [taskId]="task._id || ''"
           [userId]="userId"
           (getB)="onNewCol($event)"
+          (showCommOut)="onCommShow($event)"
           [selectedComm]="selectedComm"
         ></app-board-task>
       </div>

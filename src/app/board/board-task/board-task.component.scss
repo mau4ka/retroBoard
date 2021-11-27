@@ -4,8 +4,9 @@
   justify-content: space-between;
   align-items: flex-start;
 
-  h2 {
-    padding: 10px;
+  p {
+    font-size: 17px;
+    color: white;
   }
 
   button {
@@ -13,36 +14,55 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: red;
+    color: var(--primary-color);
   }
 }
 
-.heart {
-  cursor: pointer;
-  background: none;
-  border: none;
-  width: 20px;
-  height: 20px;
+.author {
+  color: var(--light-green-color);
 }
 
-.comment {
-  border: 1px dashed black;
-  padding: 5px;
-  margin-bottom: 5px;
-}
+.like-comm-box {
 
-.form-comm {
-  display: flex;
-  flex-direction: row;
-
-  button {
-    width: 10%;
+  .heart {
+    cursor: pointer;
     background: none;
     border: none;
-    color: azure
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.all-comm-box {
+  .comment {
+    border: 1px dashed black;
+    padding: 5px;
+    margin-bottom: 5px;
+
+    b {
+      font-size: 1.2em;
+    }
+
+    p {
+      color: var(--light-color);
+      ;
+    }
   }
 
-  .input-comm {
-    width: 90%;
+  .form-comm {
+    display: flex;
+    flex-direction: row;
+
+    button {
+      width: 10%;
+      background: none;
+      border: none;
+      color: var(--light-color)
+    }
+
+    .input-comm {
+      width: 90%;
+    }
   }
+
 }

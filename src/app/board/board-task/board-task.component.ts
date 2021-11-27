@@ -15,6 +15,7 @@ export class BoardTaskComponent implements OnInit {
   @Input() userId!: string;
   @Input() selectedComm!: string[];
   @Output() getB: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() showCommOut: EventEmitter<string> = new EventEmitter<string>();
 
   heart = false;
 
@@ -27,11 +28,12 @@ export class BoardTaskComponent implements OnInit {
   ngOnInit(): void {}
 
   showComm(taskId: string) {
-    if (this.selectedComm.includes(taskId)) {
-      this.selectedComm = this.selectedComm.filter((el) => el !== taskId);
-    } else {
-      this.selectedComm.push(taskId);
-    }
+    this.showCommOut.emit(taskId);
+    // if (this.selectedComm.includes(taskId)) {
+    //   this.selectedComm = this.selectedComm.filter((el) => el !== taskId);
+    // } else {
+    //   this.selectedComm.push(taskId);
+    // }
   }
 
   addComm(idCol: string, idTask: string, text: string): void {

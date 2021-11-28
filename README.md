@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.0.
 
+## Hosting
+
+Project hosted on Firebase [https://retroboard-49f84.web.app/](https://retroboard-49f84.web.app/)
+
+## BackEnd
+
+Project backend written in NodeJs and hosted on Heroku. 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

@@ -1,5 +1,7 @@
 import { BoardColumn } from '../../shared/interfaces';
 import {
+  AfterViewChecked,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -22,11 +24,12 @@ import { AlertService } from '../../shared/services/alert.service';
   templateUrl: './board-page.component.html',
   styleUrls: ['./board-page.component.scss'],
 })
-export class BoardPageComponent implements OnInit, OnDestroy {
+export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
   tasks: BoardColumn[] = [];
   selectedComm: string[] = [];
   userName!: string;
   userId!: string;
+  scroll = false;
 
   pSub!: Subscription;
   uSub!: Subscription;
@@ -34,14 +37,18 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   newTaskBox = false;
   loadingEnd = false;
 
-  @ViewChild('widgetsContent', { read: ElementRef })
-  public widgetsContent!: ElementRef<any>;
+  @ViewChild('boardComponent', { read: ElementRef })
+  public boardComponent!: ElementRef<any>;
 
   constructor(
     public tasksService: TasksService,
     public auth: AuthService,
-    private alert: AlertService
+    private alert: AlertService,
+    private changeDetector: ChangeDetectorRef
   ) {}
+  ngAfterViewChecked(): void {
+    this.changeDetector.detectChanges();
+  }
 
   ngOnInit(): void {
     this.getBoard();
@@ -65,6 +72,12 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     } else {
       this.selectedComm.push(taskId);
     }
+  }
+
+  checkScroll() {
+    return this.boardComponent
+      ? this.boardComponent.nativeElement.scrollWidth > window.innerWidth
+      : false;
   }
 
   onNewCol(event: boolean) {
@@ -131,15 +144,15 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   }
 
   scrollRight() {
-    this.widgetsContent.nativeElement.scrollTo({
-      left: this.widgetsContent.nativeElement.scrollLeft + 360,
+    this.boardComponent.nativeElement.scrollTo({
+      left: this.boardComponent.nativeElement.scrollLeft + 360,
       behavior: 'smooth',
     });
   }
 
   scrollLeft() {
-    this.widgetsContent.nativeElement.scrollTo({
-      left: this.widgetsContent.nativeElement.scrollLeft - 360,
+    this.boardComponent.nativeElement.scrollTo({
+      left: this.boardComponent.nativeElement.scrollLeft - 360,
       behavior: 'smooth',
     });
   }

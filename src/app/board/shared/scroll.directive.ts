@@ -5,19 +5,19 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 })
 export class ScrollDirective {
   @Input('scrollDirection') direction!: string;
-  @Input('widgetsContent') widgetsContent!: HTMLElement;
+  @Input('boardComponent') boardComponent!: HTMLElement;
 
   constructor(private el: ElementRef) {}
 
   @HostListener('mouseover') onMouseIn() {
     if (this.direction === 'right') {
-      this.widgetsContent.scrollTo({
-        left: this.widgetsContent.scrollLeft + 100,
+      this.boardComponent.scrollTo({
+        left: this.boardComponent.scrollLeft + 100,
         behavior: 'smooth',
       });
     } else {
-      this.widgetsContent.scrollTo({
-        left: this.widgetsContent.scrollLeft - 100,
+      this.boardComponent.scrollTo({
+        left: this.boardComponent.scrollLeft - 100,
         behavior: 'smooth',
       });
     }
@@ -25,17 +25,15 @@ export class ScrollDirective {
 
   @HostListener('mouseleave') onMouseLeave() {
     if (this.direction === 'right') {
-      this.widgetsContent.scrollTo({
-        left: this.widgetsContent.scrollLeft + 100,
+      this.boardComponent.scrollTo({
+        left: this.boardComponent.scrollLeft + 100,
         behavior: 'smooth',
       });
     } else {
-      this.widgetsContent.scrollTo({
-        left: this.widgetsContent.scrollLeft - 100,
+      this.boardComponent.scrollTo({
+        left: this.boardComponent.scrollLeft - 100,
         behavior: 'smooth',
       });
     }
   }
-
-
 }

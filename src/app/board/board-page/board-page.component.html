@@ -32,31 +32,35 @@
 </div>
 
 <div *ngIf="loadingEnd; else load" class="board-container">
-  <button (click)="scrollLeft()" class="scrollButtonL">&#60;</button
-  ><button (click)="scrollRight()" class="scrollButtonR">&#62;</button>
+  <button *ngIf="checkScroll()" (click)="scrollLeft()" class="scrollButtonL">
+    &#60;</button
+  ><button *ngIf="checkScroll()" (click)="scrollRight()" class="scrollButtonR">
+    &#62;
+  </button>
 
   <div
     class="board"
     id="board"
+    [style.margin-top]="checkScroll() ? '0' : '80px'"
     cdkDropList
     (cdkDropListDropped)="dropColumn($event)"
     [cdkDropListData]="tasks"
     cdkDropListOrientation="horizontal"
     cdkDropListGroup
-    #widgetsContent
+    #boardComponent
   >
     <div
       class="rScrollBox"
       appScroll
       scrollDirection="right"
-      [widgetsContent]="widgetsContent"
+      [boardComponent]="boardComponent"
     ></div>
 
     <div
       class="lScrollBox"
       appScroll
       scrollDirection="left"
-      [widgetsContent]="widgetsContent"
+      [boardComponent]="boardComponent"
     ></div>
     <div class="column-container" *ngFor="let task of tasks" cdkDrag>
       <div class="column-name-del">

@@ -128,7 +128,7 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.tasksService.createTask(task).subscribe(() => {
         this.getBoard();
       });
-      this.alert.success('You add new task!');
+      this.alert.success('Task was created!');
     }
   }
 
@@ -139,7 +139,7 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.tasksService.deleteColumn(idCol).subscribe(() => {
           this.getBoard();
         });
-        this.alert.danger('You delete column!');
+        this.alert.danger('Column was deleted!');
       }
     }
   }

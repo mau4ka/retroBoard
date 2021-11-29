@@ -30,8 +30,8 @@
   [ngClass]="selectedComm.includes(item._id || ' ') ? 'block' : 'none'"
 >
   <div class="comment" *ngFor="let com of item.comments">
-    <b>{{ com.author }}</b>
-    <p>Author: {{ com.text }}</p>
+    <b>{{ com.text }}</b>
+    <p>Author: {{ com.author }}</p>
   </div>
   <form
     (submit)="addComm(taskId || '', item._id || '', comment.value)"

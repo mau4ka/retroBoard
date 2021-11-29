@@ -39,7 +39,7 @@ export class BoardTaskComponent implements OnInit {
       this.tasksService.addComment(newComm, idCol, idTask).subscribe(() => {
         this.getB.emit(true);
       });
-      this.alert.success('You add comment!');
+      this.alert.success('Comment was created!');
     }
   }
 
@@ -50,7 +50,7 @@ export class BoardTaskComponent implements OnInit {
         this.tasksService.deleteTask(idCol, idTask).subscribe(() => {
           this.getB.emit(true);
         });
-        this.alert.danger('You delete task!');
+        this.alert.danger('Task was deleted!');
       }
     }
   }

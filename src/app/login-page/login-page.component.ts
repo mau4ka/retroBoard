@@ -6,7 +6,7 @@ import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-login-page',
-  templateUrl: './login-page.component.html'
+  templateUrl: './login-page.component.html',
 })
 export class LoginPageComponent implements OnInit {
   form!: FormGroup;
@@ -30,7 +30,7 @@ export class LoginPageComponent implements OnInit {
 
     this.route.queryParams.subscribe((params: Params) => {
       if (params['success']) {
-        this.message = 'You register successfully, now login!';
+        this.message = "You've registered successfully, please login!";
       }
     });
   }

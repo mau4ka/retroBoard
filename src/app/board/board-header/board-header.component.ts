@@ -68,7 +68,7 @@ export class BoardHeaderComponent implements OnInit {
       this.getB.emit(true);
     });
 
-    this.alert.success('You add new column!');
+    this.alert.success('Column was created!');
 
     this.formColumn.reset();
   }

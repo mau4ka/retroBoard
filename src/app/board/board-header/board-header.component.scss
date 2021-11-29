@@ -25,7 +25,7 @@
       border-radius: 50%;
     }
 
-    .log-out {
+    .log-out-container {
       background: black;
       padding: 10px;
       position: absolute;
@@ -36,7 +36,7 @@
       text-align: center;
       z-index: 999;
 
-      .log {
+      .log-out-button {
         color: var(--primary-color);
         cursor: pointer;
       }
@@ -71,7 +71,7 @@
       display: inline;
     }
 
-    .del {
+    .cancel-button {
       width: 70px;
       background: black;
       border: none;
@@ -105,7 +105,7 @@
       margin: 20px 50px;
     }
 
-    .del {
+    .cancel-button {
       width: auto;
     }
   }

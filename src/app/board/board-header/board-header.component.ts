@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NewBoardColumn } from 'src/app/shared/interfaces';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-
 import * as XLSX from 'xlsx';
 import { TasksService } from '../shared/services/tasks.service';
 
@@ -23,7 +22,7 @@ export class BoardHeaderComponent implements OnInit {
 
   formColumn!: FormGroup;
 
-  fileName = 'ExcelSheet.xlsx';
+  fileName = 'Board.xlsx';
 
   constructor(
     public tasksService: TasksService,
@@ -41,7 +40,7 @@ export class BoardHeaderComponent implements OnInit {
     });
   }
 
-  exportexcel(): void {
+  exportExcel(): void {
     let element = document.getElementById('excel-table');
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
 

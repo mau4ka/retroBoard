@@ -4,7 +4,7 @@
     <button (click)="newColumnBox = !newColumnBox" class="plus-button">
       &#10010; column
     </button>
-    <button *ngIf="loadingEnd" (click)="exportexcel()" class="plus-button">
+    <button *ngIf="loadingEnd" (click)="exportExcel()" class="plus-button">
       Download board
     </button>
 
@@ -14,12 +14,12 @@
       src="../../assets/catIcon.png"
       alt=""
     />
-    <div *ngIf="catIcon" class="log-out">
+    <div *ngIf="catIcon" class="log-out-container">
       <p>
         {{ userName }}
         <span class="pointer" (click)="catIcon = !catIcon">&#10006;</span>
       </p>
-      <p class="log" (click)="logOut()">LogOut</p>
+      <p class="log-out-button" (click)="logOut()">LogOut</p>
     </div>
   </div>
 </header>
@@ -68,6 +68,6 @@
     >
       Add
     </button>
-    <button (click)="newColumnBox = false" class="del">X</button>
+    <button (click)="newColumnBox = false" class="cancel-button">X</button>
   </form>
 </div>

@@ -134,7 +134,7 @@ export class TasksService {
       );
   }
 
-  create(task: Task) {
+  createTask(task: Task) {
     return this.http.post(`${environment.fbDbUrl}/board`, task).pipe(
       map((response) => {
         if (response) {

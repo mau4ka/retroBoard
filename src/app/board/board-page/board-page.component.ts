@@ -46,9 +46,6 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     private alert: AlertService,
     private changeDetector: ChangeDetectorRef
   ) {}
-  ngAfterViewChecked(): void {
-    this.changeDetector.detectChanges();
-  }
 
   ngOnInit(): void {
     this.getBoard();
@@ -57,6 +54,10 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.userName = user.name;
       this.userId = user.userId;
     });
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetector.detectChanges();
   }
 
   getBoard() {
@@ -74,16 +75,16 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  checkScroll() {
-    return this.boardComponent
-      ? this.boardComponent.nativeElement.scrollWidth > window.innerWidth
-      : false;
-  }
-
   onNewCol(event: boolean) {
     if (event) {
       this.getBoard();
     }
+  }
+
+  checkScroll() {
+    return this.boardComponent
+      ? this.boardComponent.nativeElement.scrollWidth > window.innerWidth
+      : false;
   }
 
   dropColumn(event: CdkDragDrop<any[]>) {
@@ -124,7 +125,7 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
         id: columnId,
       };
 
-      this.tasksService.create(task).subscribe(() => {
+      this.tasksService.createTask(task).subscribe(() => {
         this.getBoard();
       });
       this.alert.success('You add new task!');

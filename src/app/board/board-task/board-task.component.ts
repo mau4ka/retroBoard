@@ -29,11 +29,6 @@ export class BoardTaskComponent implements OnInit {
 
   showComm(taskId: string) {
     this.showCommOut.emit(taskId);
-    // if (this.selectedComm.includes(taskId)) {
-    //   this.selectedComm = this.selectedComm.filter((el) => el !== taskId);
-    // } else {
-    //   this.selectedComm.push(taskId);
-    // }
   }
 
   addComm(idCol: string, idTask: string, text: string): void {

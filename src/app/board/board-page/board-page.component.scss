@@ -73,7 +73,7 @@
   cursor: move;
   width: 24px;
   height: 24px;
-  margin: auto 0;
+  margin: auto 2px;
 }
 
 .task-box {
@@ -139,10 +139,14 @@
   border: 1px solid var(--light-color);
   border-radius: 5px 5px 0 0;
   padding: 0 10px;
+  align-items: center;
+  height: 90px;
 
   h2 {
     padding: 10px;
     font-size: 22px;
+    word-wrap: break-word;
+    max-width: 80%;
   }
 
   button {
@@ -151,7 +155,7 @@
     border: none;
     cursor: pointer;
     color: var(--primary-color);
-    margin-left: 5px;
+    margin: 0 2px
   }
 }
 
@@ -159,4 +163,15 @@
   .column-container {
     min-width: 190px;
   }
+
+  .column-name-del {
+    height: 55px;
+    padding: 5px;
+
+    h2 {
+      font-size: 15px;
+    }
+  }
+
+
 }

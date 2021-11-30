@@ -66,6 +66,9 @@
           formColumn.get("columnName")!.errors!["minlength"]!["actualLength"]
         }}
       </small>
+      <small *ngIf="formColumn.get('columnName')!.errors!['maxlength']">
+        Column name is too long
+      </small>
     </div>
   </form>
 </div>

@@ -36,6 +36,7 @@ export class BoardHeaderComponent implements OnInit {
       columnName: new FormControl(null, [
         Validators.required,
         Validators.minLength(3),
+        Validators.maxLength(21),
       ]),
     });
   }

@@ -1,7 +1,7 @@
 <header class="header">
   <h1 class="pointer" routerLink="/">RetroBoard</h1>
   <div class="header-buttons">
-    <button (click)="newColumnBox = !newColumnBox" class="plus-button">
+    <button *ngIf="loadingEnd" (click)="newColumnBox = !newColumnBox" class="plus-button">
       &#10010; column
     </button>
     <button *ngIf="loadingEnd" (click)="exportExcel()" class="plus-button">

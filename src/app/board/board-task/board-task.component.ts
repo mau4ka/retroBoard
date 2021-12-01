@@ -17,7 +17,7 @@ export class BoardTaskComponent implements OnInit {
   @Output() getB: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() showCommOut: EventEmitter<string> = new EventEmitter<string>();
 
-  heart = false;
+  heart: boolean = false;
 
   constructor(
     public tasksService: TasksService,
@@ -27,7 +27,7 @@ export class BoardTaskComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  showComm(taskId: string) {
+  showComm(taskId: string): void {
     this.showCommOut.emit(taskId);
   }
 
@@ -43,7 +43,7 @@ export class BoardTaskComponent implements OnInit {
     }
   }
 
-  deleteTask(idCol: string, idTask: string) {
+  deleteTask(idCol: string, idTask: string): void {
     if (idCol && idTask) {
       let result = confirm('You really want delete task?');
       if (result) {
@@ -55,7 +55,7 @@ export class BoardTaskComponent implements OnInit {
     }
   }
 
-  addLike(idColumn: string, idTask: string, like: any) {
+  addLike(idColumn: string, idTask: string): void {
     this.heart = true;
     this.tasksService.setLike(idColumn, idTask).subscribe(() => {
       this.heart = false;
@@ -63,7 +63,7 @@ export class BoardTaskComponent implements OnInit {
     });
   }
 
-  heartType(oneTask: Task) {
+  heartType(oneTask: Task): string {
     return oneTask.likes?.includes(this.userId) ? 'red' : 'black';
   }
 }

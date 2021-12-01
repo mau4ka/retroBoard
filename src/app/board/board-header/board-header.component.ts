@@ -51,7 +51,7 @@ export class BoardHeaderComponent implements OnInit {
     XLSX.writeFile(wb, this.fileName);
   }
 
-  logOut() {
+  logOut(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
   }

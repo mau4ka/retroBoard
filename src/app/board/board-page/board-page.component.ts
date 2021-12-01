@@ -29,16 +29,15 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectedComm: string[] = [];
   userName!: string;
   userId!: string;
-  scroll = false;
+  scroll: boolean = false;
+  newTaskBox: boolean = false;
+  loadingEnd: boolean = false;
 
   pSub!: Subscription;
   uSub!: Subscription;
 
-  newTaskBox = false;
-  loadingEnd = false;
-
   @ViewChild('boardComponent', { read: ElementRef })
-  public boardComponent!: ElementRef<any>;
+  public boardComponent!: ElementRef<HTMLElement>;
 
   constructor(
     public tasksService: TasksService,
@@ -60,14 +59,14 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.changeDetector.detectChanges();
   }
 
-  getBoard() {
+  getBoard(): void {
     this.pSub = this.tasksService.getAll().subscribe((tasks) => {
       this.tasks = tasks[0].tasks;
       this.loadingEnd = true;
     });
   }
 
-  onCommShow(taskId: string) {
+  onCommShow(taskId: string): void {
     if (this.selectedComm.includes(taskId)) {
       this.selectedComm = this.selectedComm.filter((el) => el !== taskId);
     } else {
@@ -75,24 +74,24 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  onNewCol(event: boolean) {
+  onNewCol(event: boolean): void {
     if (event) {
       this.getBoard();
     }
   }
 
-  checkScroll() {
+  checkScroll(): boolean {
     return this.boardComponent
       ? this.boardComponent.nativeElement.scrollWidth > window.innerWidth
       : false;
   }
 
-  dropColumn(event: CdkDragDrop<any[]>) {
+  dropColumn(event: CdkDragDrop<BoardColumn[]>): void {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
     this.tasksService.updateBoard(event.container.data).subscribe();
   }
 
-  drop(event: CdkDragDrop<Task[]>, taskId: string) {
+  drop(event: CdkDragDrop<Task[]>, taskId: string): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -118,7 +117,7 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  newTask(taskText: string, columnId: string) {
+  newTask(taskText: string, columnId: string): void {
     if (taskText && columnId) {
       let task: Task = {
         text: taskText,
@@ -132,7 +131,7 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  deleteColumn(idCol: string) {
+  deleteColumn(idCol: string): void {
     if (idCol) {
       let result = confirm('You really want delete column?');
       if (result) {
@@ -144,14 +143,14 @@ export class BoardPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  scrollRight() {
+  scrollRight(): void {
     this.boardComponent.nativeElement.scrollTo({
       left: this.boardComponent.nativeElement.scrollLeft + 360,
       behavior: 'smooth',
     });
   }
 
-  scrollLeft() {
+  scrollLeft(): void {
     this.boardComponent.nativeElement.scrollTo({
       left: this.boardComponent.nativeElement.scrollLeft - 360,
       behavior: 'smooth',

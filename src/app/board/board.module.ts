@@ -9,7 +9,7 @@ import { BoardRoutingModule } from './board-routing.module';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../shared/auth.interseptor';
+import { AuthInterceptor } from '../shared/auth.interceptor';
 import { BoardHeaderComponent } from './board-header/board-header.component';
 import { BoardTaskComponent } from './board-task/board-task.component';
 import { SvgHandleComponent } from './shared/components/svg-handle/svg-handle.component';

@@ -9,7 +9,7 @@
   <p>
     {{ item.likes?.length }}
     <button
-      (click)="addLike(taskId || '', item._id || '', like)"
+      (click)="addLike(taskId || '', item._id || '')"
       class="heart"
       [ngClass]="heartType(item)"
       [disabled]="heart"

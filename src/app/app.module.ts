@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { AuthInterceptor } from './shared/auth.interseptor';
+import { AuthInterceptor } from './shared/auth.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';

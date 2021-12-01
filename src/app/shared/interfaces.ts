@@ -1,7 +1,3 @@
-export interface Board {
-  columns: BoardColumn[];
-}
-
 export interface BoardColumn {
   _id?: string;
   name: string;

@@ -17,12 +17,6 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   constructor(private alertService: AlertService) {}
 
-  ngOnDestroy(): void {
-    if (this.aSub) {
-      this.aSub.unsubscribe();
-    }
-  }
-
   ngOnInit(): void {
     this.aSub = this.alertService.alert$.subscribe((alert) => {
       this.text = alert.text;
@@ -32,5 +26,11 @@ export class AlertComponent implements OnInit, OnDestroy {
         clearTimeout(timeout);
       }, this.delay);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.aSub) {
+      this.aSub.unsubscribe();
+    }
   }
 }

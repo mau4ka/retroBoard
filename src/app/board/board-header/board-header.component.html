@@ -1,0 +1,74 @@
+<header class="header">
+  <h1 class="pointer" routerLink="/">RetroBoard</h1>
+  <div class="header-buttons">
+    <button *ngIf="loadingEnd" (click)="newColumnBox = !newColumnBox" class="plus-button">
+      &#10010; column
+    </button>
+    <button *ngIf="loadingEnd" (click)="exportExcel()" class="plus-button">
+      Download board
+    </button>
+
+    <img
+      (click)="catIcon = !catIcon"
+      class="cat-icon pointer"
+      src="../../assets/catIcon.png"
+      alt=""
+    />
+    <div *ngIf="catIcon" class="log-out-container">
+      <p>
+        {{ userName }}
+        <span class="pointer" (click)="catIcon = !catIcon">&#10006;</span>
+      </p>
+      <p class="log-out-button" (click)="logOut()">LogOut</p>
+    </div>
+  </div>
+</header>
+
+<div *ngIf="newColumnBox" class="add-column-box">
+  <form
+    class="add-column-form"
+    [formGroup]="formColumn"
+    (ngSubmit)="addColumn()"
+  >
+    <div>
+      <input
+        class="plus-input"
+        type="text"
+        formControlName="columnName"
+        placeholder="Enter column name"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="formColumn.invalid"
+    >
+      Add
+    </button>
+    <button (click)="newColumnBox = false" class="cancel-button">X</button>
+    <div
+      class="validation"
+      *ngIf="
+        formColumn.get('columnName')!.touched &&
+        formColumn.get('columnName')!.invalid
+      "
+    >
+      <small *ngIf="formColumn.get('columnName')!.errors!['required']">
+        Enter column name
+      </small>
+      <small *ngIf="formColumn.get('columnName')!.errors!['minlength']">
+        Column name is too short. It must be at least
+        {{
+          formColumn.get("columnName")!.errors!["minlength"]!["requiredLength"]
+        }}, now
+        {{
+          formColumn.get("columnName")!.errors!["minlength"]!["actualLength"]
+        }}
+      </small>
+      <small *ngIf="formColumn.get('columnName')!.errors!['maxlength']">
+        Column name is too long
+      </small>
+    </div>
+  </form>
+</div>

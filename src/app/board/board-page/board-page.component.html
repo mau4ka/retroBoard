@@ -1,0 +1,103 @@
+<app-board-header
+  [userName]="userName"
+  [loadingEnd]="loadingEnd"
+  (getB)="onNewCol($event)"
+></app-board-header>
+
+<app-alert></app-alert>
+
+<div class="alert alert-danger" *ngIf="tasksService.error$ | async as error">
+  {{ error }}
+</div>
+
+<ng-template #load>
+  <app-preloader></app-preloader>
+</ng-template>
+
+<div class="none">
+  <table id="excel-table">
+    <tbody>
+      <tr>
+        <th>Block #</th>
+        <th>Block name</th>
+        <th>Tasks...</th>
+      </tr>
+      <tr *ngFor="let task of tasks; let i = index">
+        <th>{{ i + 1 }}</th>
+        <td>{{ task.name }}</td>
+        <td *ngFor="let item of task.tasks">{{ item.text }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="loadingEnd; else load" class="board-container">
+  <button *ngIf="checkScroll()" (click)="scrollLeft()" class="scrollButtonL">
+    &#60;</button
+  ><button *ngIf="checkScroll()" (click)="scrollRight()" class="scrollButtonR">
+    &#62;
+  </button>
+
+  <div
+    class="board"
+    id="board"
+    [style.margin-top]="checkScroll() ? '0' : '80px'"
+    cdkDropList
+    (cdkDropListDropped)="dropColumn($event)"
+    [cdkDropListData]="tasks"
+    cdkDropListOrientation="horizontal"
+    cdkDropListGroup
+    #boardComponent
+  >
+    <div
+      class="rScrollBox"
+      appScroll
+      scrollDirection="right"
+      [boardComponent]="boardComponent"
+    ></div>
+
+    <div
+      class="lScrollBox"
+      appScroll
+      scrollDirection="left"
+      [boardComponent]="boardComponent"
+    ></div>
+    <div class="column-container" *ngFor="let task of tasks" cdkDrag>
+      <div class="column-name-del">
+        <button (click)="deleteColumn(task._id || '')">&#10006;</button>
+        <h2 class="center">{{ task.name | uppercase }}</h2>
+        <div class="column-handle" cdkDragHandle>
+          <app-svg-handle></app-svg-handle>
+        </div>
+      </div>
+
+      <form
+        class="form-addTask"
+        (submit)="newTask(addTask.value, task._id || '')"
+      >
+        <input class="input-addTask" type="text" id="addTask" #addTask />
+        <button class="pointer" type="submit">&#10010;</button>
+      </form>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="task.tasks"
+        class="column-list"
+        (cdkDropListDropped)="drop($event, task.name)"
+        id="{{ task._id }}"
+      >
+        <app-board-task
+          *ngFor="let item of task.tasks"
+          cdkDrag
+          class="task-box"
+          [item]="item"
+          [taskId]="task._id || ''"
+          [userId]="userId"
+          (getB)="onNewCol($event)"
+          (showCommOut)="onCommShow($event)"
+          [selectedComm]="selectedComm"
+        ></app-board-task>
+      </div>
+    </div>
+  </div>
+</div>

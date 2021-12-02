@@ -1,0 +1,70 @@
+.task-name-del {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+
+
+  p {
+    font-size: 17px;
+    color: white;
+  }
+
+  button {
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+    margin-left: 5px;
+  }
+}
+
+.author {
+  color: var(--light-green-color);
+}
+
+.like-comm-box {
+
+  .heart {
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.all-comm-box {
+  .comment {
+    border: 1px dashed black;
+    padding: 5px;
+    margin-bottom: 5px;
+
+    b {
+      font-size: 1.2em;
+    }
+
+    p {
+      color: var(--light-color);
+      ;
+    }
+  }
+
+  .form-comm {
+    display: flex;
+    flex-direction: row;
+
+    button {
+      width: 10%;
+      background: none;
+      border: none;
+      color: var(--light-color)
+    }
+
+    .input-comm {
+      width: 90%;
+    }
+  }
+
+}

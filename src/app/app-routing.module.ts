@@ -1,10 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
+import { MainPageComponent } from './main-page/main-page.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: MainPageComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterPageComponent,
+  },
+  {
+    path: 'board',
+    loadChildren: () =>
+      import('./board/board.module').then((m) => m.BoardModule),
+  },
+  {
+    path: '**',
+    redirectTo: '/',
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
